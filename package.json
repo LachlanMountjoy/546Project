@@ -1,0 +1,23 @@
+{
+  "name": "546project",
+  "version": "1.0.0",
+  "description": "Second Hand store",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LachlanMountjoy/546Project.git"
+  },
+  "author": "Lachlan Mountjoy, Chaeli Vieira, John Wang, Rupu Li",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LachlanMountjoy/546Project/issues"
+  },
+  "homepage": "https://github.com/LachlanMountjoy/546Project#readme",
+  "dependencies": {
+    "mongo": "^0.1.0"
+  }
+}
