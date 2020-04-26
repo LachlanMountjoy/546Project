@@ -6,9 +6,10 @@ const path = require('path');
 
 const constructorMethod = (app) => {
 	app.get('/', (req, res) => {
-		res.render('layouts/main', {body :"placeholder"});
-    });
-    app.use('/login', loginRoutes);
+		res.render('pages/landing');
+	});
+
+	app.use('/login', loginRoutes);
     app.use('/posts', postRoutes);
     app.use('/users', userRoutes);
 	app.use('*', (req, res) => {

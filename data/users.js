@@ -1,7 +1,7 @@
 const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
 const uuid = require('uuid/v4');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 let exportedMethods = {
   async getAllUsers() {
@@ -17,10 +17,30 @@ let exportedMethods = {
     if (!user) throw 'User not found';
     return user;
   },
-  async addUser(firstName, lastName, email, location, password) {
+
+  async getUserbyEmail(email) {
+    console.log("in email db")
     const userCollection = await users();
-    const hashedPassword = bcrypt.hash(password, 10);
+    const user = await userCollection.findOne({email: email});
+    console.log("here")
+    // if (!user) throw 'User not found';
+    return user;
+  }, 
+
+  async getUserbyUsername(username) {
+    console.log("in username db")
+    const userCollection = await users();
+    const user = await userCollection.findOne({username: username});
+    // if (!user) throw 'User not found';
+    return user;
+  }, 
+
+  async addUser(firstName, lastName, email, location, password, username) {
+    const userCollection = await users();
+    const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("pw in db = " + hashedPassword)
     let newUser = {
+      username: username,
       firstName: firstName,
       lastName: lastName,
       email: email,
@@ -36,6 +56,7 @@ let exportedMethods = {
     if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
     return await this.getUserById(newInsertInformation.insertedId);
   },
+
   async removeUser(id) {
     const userCollection = await users();
     const deletionInfo = await userCollection.removeOne({_id: id});
@@ -44,12 +65,14 @@ let exportedMethods = {
     }
     return true;
   },
+
   async updateUser(id, updatedUser) {
     const user = await this.getUserById(id);
     console.log(user);
     const hashedPassword = bcrypt.hash(updatedUser.password, 10);
 
     let userUpdateInfo = {
+      username : username,
       firstName: updatedUser.firstName,
       lastName: updatedUser.lastName,
       email: updatedUser.email,

@@ -1,0 +1,31 @@
+
+<div>
+    <div>
+        <h3> Log into an existing account </h3>
+        <form method="POST" id="login-form" action='/login/verifyUser'>
+            <label for="username">Username</label>
+            <input name="username" id="username">
+            <label for="password">Password</label>
+            <input name="password" id="password">
+            <button type="submit">submit</button>
+        </form>
+    </div>
+    <div>
+        <h3> Create new user </h3>
+        <form method="POST" id="create-user-form" action='/login/createUser'>
+            <label for="createUsername">Username</label>
+            <input name="createUsername" id="createUsername">
+            <label for="createPassword">Password</label>
+            <input name="createPassword" id="createPassword">
+            <label for="createEmail">Email</label>
+            <input name="createEmail" id="createEmail">
+            <label for="createFN">First Name</label>
+            <input name="createFN" id="createFN">
+            <label for="createLN">Last Name</label>
+            <input name="createLN" id="createLN">
+            <label for="createLocation">Location</label>
+            <input name="createLocation" id="createLocation">
+            <button type="submit">submit</button>
+        </form>
+    </div>
+</div>

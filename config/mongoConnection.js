@@ -2,7 +2,7 @@ const MongoClient = require('mongodb').MongoClient;
 const settings = {
   mongoConfig: {
     serverUrl: 'mongodb://localhost:27017/',
-    database: 'Second Hand Store'
+    database: 'Second_Hand_Store'
   }
 };
 const mongoConfig = settings.mongoConfig;
