@@ -11,6 +11,11 @@
         <form method="POST" action="/login">
             <button type="submit"> My Account </button>  
         </form>
+        {{#if loggedIn}}
+        <form method="POST" action="/logout" id="logout_button">
+            <button type="submit"> Logout </button>  
+        </form>
+        {{/if}}
     </header>
     <main>
         <p>stuff will be loaded into the body space below</p>

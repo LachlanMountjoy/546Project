@@ -12,7 +12,7 @@ router.post('/', async (req, res) =>  {
     console.log("In /login")
     if(!req.session.user){
         console.log("user not logged in")
-        res.render('pages/login')
+        res.render('pages/login', {loggedIn: false})
     } else {
         console.log("User already logged in, get user info and show their page")
         console.log(req.session.user)
@@ -21,8 +21,10 @@ router.post('/', async (req, res) =>  {
         } catch (error) {
             console.log(error)
         }
-        let user = await userData.getUserbyUsername(req.session.username)
-        res.render('pages/user', {user:user})
+        console.log(req.session.user.username)
+        let user = await userData.getUserbyUsername(req.session.user.username)
+        console.log("user = " + user)
+        res.render('pages/user', {user:user, loggedIn: true})
     }
 });
 
@@ -34,7 +36,7 @@ router.post('/createUser', async (req, res) =>  {
 
     if(req.session.user){
         console.log("user is logged in")
-        res.render('pages/login')
+        res.render('pages/login', {loggedIn: true})
     } else {
         console.log("creating a new user")
         const { createUsername, createEmail, createPassword, createLN, createFN, createLocation } = req.body
@@ -42,7 +44,8 @@ router.post('/createUser', async (req, res) =>  {
 
         if(!createUsername | !createEmail | !createPassword | !createLN | !createFN | !createLocation){
             console.log("Missing field info")
-            res.render('pages/login')
+            res.render('pages/login', {loggedIn: false})
+            return
         }
 
         let cleanUsername = createUsername.replace(/\W/g, '');
@@ -63,10 +66,19 @@ router.post('/createUser', async (req, res) =>  {
         let user2 = await userData.getUserbyEmail(cleanEmail);
         console.log("got user and user 2 from db")
 
+
+        console.log(user)
+        console.log(user2)
+
+        if(user){
+            console.log("ASDADSF")
+        }
+
         //Email or username already in DB
-        if(user | user2){
+        if(user || user2){
             console.log("username or email already in db")
-            res.render('pages/login')
+            res.render('pages/login', {loggedIn: false})
+            return
         }
 
         //Creating a new user
@@ -86,7 +98,7 @@ router.post('/createUser', async (req, res) =>  {
             location: createLocation,
         };
         user = await userData.getUserbyUsername(cleanUsername);
-        res.render('pages/user', {user:user})
+        res.render('pages/user', {user:user, loggedIn: true})
     }
 });
 
@@ -99,7 +111,7 @@ router.post('/verifyUser', async (req, res) => {
     } catch(e) {
         console.log(e);
         console.log("err from getUserbyUsername")
-        res.render('pages/login')
+        res.render('pages/login', {loggedIn:false})
     }
 
     //User is in DB
@@ -121,68 +133,15 @@ router.post('/verifyUser', async (req, res) => {
                 email: user.email,
                 location: user.location
             };
-            res.render('pages/user', {user: user})
+            res.render('pages/user', {user: user, loggedIn: true})
         } else {
             console.log("passwords dont watch")
-            res.render('pages/login')
+            res.render('pages/login', {loggedIn: false})
         }
     } catch (e) {
         //Do nothing
         console.log(e)
     }
 })
-
-    // //Checking to see if the username or email is already in use
-    // var cleanedUsername = username.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-    // cleanedUsername = cleanedUsername.toLowerCase()
-    // const user = await userCollection.findOne({username: cleanedUsername});
-    // if (user) throw 'Username already taken';
-    // const user = await userCollection.findOne({email: email});
-    // if (user) throw 'Username already taken';
-
-
-
-// router.post('/', async (req, res) =>  {
-
-//     const { username, password } = req.body
-//     user = users.find(x => x.username === username);
-    
-//     //Username not in DB
-//     console.log("here")
-//     if(!user) {
-//         // res.redirect(401, '/');
-//         console.log("here1")
-//         res.status(401).render('pages/login');
-//     } 
-//     //Username in DB
-//     else {
-//         let match = false;
-//         try {
-//             match = await bcrypt.compare(password, user.hashedPassword);
-//         } catch (e) {
-//             //Do nothing
-//         }
-
-//         //Valid Password
-//         if(match){
-//             req.session.user = { 
-//                 firstName: user.firstName, 
-//                 lastName: user.lastName, 
-//                 userId: user._id,
-//                 username: user.username,
-//                 profession: user.profession,
-//                 bio: user.bio
-//             };
-
-//             req.method = "get"
-//             res.redirect("/private");
-//         } 
-//         //Invalid Password
-//         else {
-//             // res.redirect(401, '/');
-//             res.status(401).render('pages/login');
-//         }
-//     }
-// });
 
 module.exports = router; 
