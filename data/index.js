@@ -1,7 +1,7 @@
-const postData = require("./posts");
-const userData = require("./users");
+const itemData = require("./items");
+const bidderData = require('./bidders.js');
 
 module.exports = {
-  users: userData,
-  posts: postData
+  items: itemData,
+  bidders: bidderData
 };
