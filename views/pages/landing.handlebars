@@ -1,5 +1,15 @@
 <p>Temporary text here</p>
 {{#each items}}
-    <h3>Each of these headers represents an item in the database</h3>
+    <h3>{{itemName}}</h3>
+    <p>{{description}} <br>
+        Min bid of {{currentPrice}} 
+            {{#if highestBidder}} 
+                by {{highestBidder}} 
+            {{/if}} <br>
+        Posted at {{postedTime}}    
+    </p>
+    {{#each comments}}
+        each of these lines represents a comment on the item <br>
+    {{/each}}
 {{/each}}
 <p>end of posts</p>

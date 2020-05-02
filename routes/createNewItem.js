@@ -44,10 +44,10 @@ router.post('/add', async(req, res) => {
     // let sellerID = req.session.user
     let user = await userData.getUserbyUsername(req.session.user.username)
     console.log(user)
-    let sellerID = user._id
+    let sellerUN = user.username
     console.log("sellerID = " + sellerID)
     try {
-        itemData.addItem(createItemName, createItemDescription, sellerID, catTokens, startingPrice, createImageLink)
+        itemData.addItem(createItemName, createItemDescription, sellerUN, catTokens, startingPrice, createImageLink)
     } catch (error) {
         //nothing
     }

@@ -14,17 +14,17 @@
         <h3> Create new user </h3>
         <form method="POST" id="create-user-form" action='/login/createUser'>
             <label for="createUsername">Username</label>
-            <input name="createUsername" id="createUsername">
+            <input name="createUsername" id="createUsername" required>
             <label for="createPassword">Password</label>
-            <input name="createPassword" id="createPassword">
+            <input name="createPassword" id="createPassword" required>
             <label for="createEmail">Email</label>
-            <input name="createEmail" id="createEmail">
+            <input name="createEmail" id="createEmail" required>
             <label for="createFN">First Name</label>
-            <input name="createFN" id="createFN">
+            <input name="createFN" id="createFN" required>
             <label for="createLN">Last Name</label>
-            <input name="createLN" id="createLN">
+            <input name="createLN" id="createLN" required>
             <label for="createLocation">Location</label>
-            <input name="createLocation" id="createLocation">
+            <input name="createLocation" id="createLocation" required>
             <button type="submit">submit</button>
         </form>
     </div>
