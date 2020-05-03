@@ -1,5 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 const items = mongoCollections.items;
+const ObjectId = require('mongodb').ObjectID;
 
 let exportedMethods = {
     async getAllItems(){
@@ -9,41 +10,99 @@ let exportedMethods = {
         return itemList;
     },
 
-    async getItemByID(id){
+    async getItem(id) {
+        if (!id) throw 'you must provide an item id to search for ';
         const itemCollection = await items();
-        const item = await itemCollection.findOne({_id: id});
-        if (!item) throw 'item not found';
+        const item = await itemCollection.findOne({ _id: new ObjectId(id) });
+        if (item === null) throw 'no item with the id ';
         return item;
     },
 
-    async removeItemByItem(id){
+    async removeItem(id) {
+        if (!id) throw 'you must provide an id to search for';
         const itemCollection = await items();
-        const deletionInfo = await itemCollection.removeOne({_id: id});
-        if (deletionInfo.deletedCount === 0) throw `Could not delete item with id of ${id}`;
-        return true;
+        const deletionInfo = await itemCollection.deleteOne({ _id: new ObjectId(id) });
+        //await itemCollection.deleteMany({author: id});
+        if (deletionInfo.deletedCount === 0) {
+            throw `Could not delete item with id of ${id}`;
+        }
+        return { deleted: true };
     },
 
-    async addItem(itemName, description, sellerID, categories, startingPrice, imageLinks) {
-        const itemCollection = await items()
-        var today = new Date();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    async addItem(sellType, auctionExpiration, itemName, categories, description, image, userId, price) {
+        if (!itemName) throw 'You should provide a name of your item';
+        if (!categories || !Array.isArray(categories)) throw 'you should provide an array of categories';
+        //if (categories.length <= 0) throw 'You must provide at least one category';
+        if (!description) throw 'You should provide a description of your item';
+        if (!image) throw 'you should update the picture of your item';   //TODO Store image in mongodb
+        if (!userId) throw 'you should provide a userId';
+        if (!price) throw 'you should provide a price of the item';
+        if (typeof price != "number" || price <= 0 ) throw 'you should provide the valid price of the item';
+        if (!sellType) throw 'you shoule choose a type of sell';
+        if (!auctionExpiration) throw 'you should provide auctionExpiration'
+        const itemCollection = await items();
+        const time = new Date();
         let newItem = {
+            sellType: sellType,
+            auctionExpiration: auctionExpiration,
             itemName: itemName,
-            description: description,
-            sellerID: sellerID,
+            price: price,
             categories: categories,
-            currentPrice: startingPrice,
-            images: imageLinks,
-            comments: [],
-            bidders: [],
-            highestBidder: null,
-            postedTime: time
+            userId: userId,
+            description: description,
+            image: image,
+            postDate: time,
+            status : 'selling',
+            buyer: ''
         };
-        const newInsertInformation = await itemCollection.insertOne(newItem);
-        if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
-       
-        const newId = newInsertInformation.insertedId;
-        return itemCollection.findOne(newId);
+    const insertInfo = await itemCollection.insertOne(newItem);
+    if (insertInfo.insertedCount === 0) throw 'could not add new item';
+    const newId = insertInfo.insertedId;
+    const item = await this.getItem(newId);
+    return item;
+    },
+    async updateItem(id, sellType, auctionExpiration, itemName, categories, description, image, price) {
+        if (!id) throw 'you must provide an item id to search for ';
+        if (!itemName) throw 'You should provide a name of your item';
+        if (!categories || !Array.isArray(categories)) throw 'you should provide an array of categories';
+        //if (categories.length <= 0) throw 'You must provide at least one category';
+        if (!description) throw 'You should provide a description of your item';
+        if (!image) throw 'you should update the picture of your item';   //TODO Store image in mongodb
+        if (!price) throw 'you should provide a price of the item';
+        if (typeof price != "number" || price <= 0 ) throw 'you should provide the valid price of the item';
+        if (!sellType) throw 'you shoule choose a type of sell';
+        if (!auctionExpiration) throw 'you should provide auctionExpiration';
+        const itemCollection = await items();
+        let updatedItem = {
+            itemName: itemName,
+            categories: categories,
+            description: description,
+            image: image,
+            price: price,
+            sellType: sellType,
+            auctionExpiration: auctionExpiration,
+        };
+        const updatedInfo = await itemCollection.updateOne({ _id: new ObjectId(id) }, { $set: updatedItem });
+        if (updatedInfo.modifiedCount === 0) {
+            throw 'could not update item successfully';
+        }
+
+        return await this.getItem(id);
+    },
+    async updateBuyer(itemId, buyer) {
+        if(!itemId) throw 'you should provide itemId';
+        if(!buyer) throw 'you should provide a buyer';
+        const itemCollection = await items();
+        let updateInfo = {
+            buyer: buyer,
+            status: "soldOut"
+        };
+        const updatedInfo = await itemCollection.updateOne({ _id: new ObjectId(itemId) }, { $set: updateInfo });
+        if (updatedInfo.modifiedCount === 0) {
+            throw 'could not buy successfully';
+        }
+
+
     }
 };
 

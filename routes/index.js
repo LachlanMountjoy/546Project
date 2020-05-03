@@ -3,6 +3,8 @@ const postRoutes 			= require('./posts');
 const userRoutes 			= require('./users');
 const logoutRoutes 			= require('./logout');
 const createNewItemRoutes 	= require('./createNewItem')
+const itemRoutes            = require("./items");
+const bidItemRoutes         = require("./bidItems");
 
 const path = require('path');
 const data = require('../data')
@@ -23,7 +25,9 @@ const constructorMethod = (app) => {
 	app.use('/login', 	loginRoutes);
     app.use('/posts', 	postRoutes);
 	app.use('/users', 	userRoutes);
-	app.use('/createNewItem', createNewItemRoutes)
+	app.use('/createNewItem', createNewItemRoutes);
+	app.use("/items", itemRoutes);
+    app.use("/bidItems", bidItemRoutes);
 	app.use('*', (req, res) => {
 		res.redirect('/');
 	});

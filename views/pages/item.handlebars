@@ -1,0 +1,162 @@
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Second Hand Store</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">My page</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Log out</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+  <!-- Heading Row -->
+  <div id="statusDiv" value="{{status}}" hidden></div>
+  <form method="POST" action="/items" name="itemDeleteForm" id="itemDeleteForm">
+    <input class="itemId" name="itemId" id="itemId" value="{{itemId}}" hidden />
+    <input class="sellType" name="sellType" id="sellType" value="{{sellType}}" hidden />
+    <div class="row align-items-center my-5">
+      <div class="col-md-4">
+
+         <div id="thumbnailDiv">
+            <img class="img-thumbnail hover-image" width="100%" height="250" src={{image}}>
+          </div>
+          {{!-- <div class="invalid-feedback">
+              Uploaded file is not a valid image.
+            </div> --}}
+
+
+      </div>
+      <!-- /.col-lg-8 -->
+      <div class="col-md-8">
+        <div class="form-group">
+          <h1>{{itemName}}</h1>
+          <small class="form-text text-muted">&nbsp;&nbsp;&nbsp;&nbsp;by {{userId}}</small>
+          <small class="form-text text-muted">&nbsp;&nbsp;&nbsp;&nbsp;{{postDate}}</small>
+        </div>
+
+        <div class="form-group">
+          <label for="categories">Categories</label>
+          <p class="form-control" name="categories" id="categories">{{categories}}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="descriptions">Descriptions</label>
+          <p class="form-control" name="descriptions" id="descriptions">{{description}}</p>
+        </div>
+
+        <div class="form-group">
+          <div>
+          <label for="originalPrice" id="priceLabel">Original Price</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+            <p class="form-control" name="originalPrice" id="originalPrice">{{price}}</p>
+          </div>
+          </div>
+
+          <div class="bidPriceDiv" id="bidPriceDiv" hidden>
+          <label for="currentPrice">Current highest Bid</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+            <p class="form-control" name="currentPrice" id="currentPrice">{{currentPrice}}</p>
+          </div>
+        </div>
+        </div>
+
+
+
+
+        <a class="btn btn-primary" id="buyLink" href="/items/buyItem/{{id}}" hidden>buy</a>
+
+        <a class="btn btn-primary" id="modifyLink" href="/items/modifyItem/{{id}}" hidden>Modify</a>
+
+        <button type="submit" class="btn btn-primary">Delete</button>
+      </div>
+      <!-- /.col-md-4 -->
+    </div>
+    <!-- /.row -->
+
+  </form>
+
+  <!-- Content Row -->
+  <div class="row">
+    <div class="bidItemDiv" id="bidItemDiv" hidden>
+      <div class="card h-100">
+        <div class="card-body">
+          <h2 class="card-title">Bidder</h2>
+          <p class="card-text">There are currently {{bidderCount}} people bidding on this product. The current highest bid price is ${{currentPrice}} called by {{currentBidder}}.</p>
+        </div>
+        <div class="card-footer">
+          <a class="btn btn-primary" id="bidLink" href="/bidItems/item/{{id}}" hidden>Bid</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{!-- <!-- /.col-md-4 -->
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">Card Two</h2>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi labore.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-primary btn-sm">More Info</a>
+          </div>
+        </div>
+      </div>
+      <!-- /.col-md-4 -->
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">Card Three</h2>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-primary btn-sm">More Info</a>
+          </div>
+        </div>
+      </div>
+      <!-- /.col-md-4 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div> --}}
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Cs-546-Priject &copy; Second Hand Store</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../public/jquery/jquery.min.js"></script>
+  <script src="../public/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/public/item-script.js"></script>

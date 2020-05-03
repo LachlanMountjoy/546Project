@@ -1,0 +1,43 @@
+/*!
+ * Start Bootstrap - Small Business (https://startbootstrap.com/template-overviews/small-business)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-small-business/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+}
+
+.hover-image {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.hover-middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+#thumbnailDiv:hover .hover-image {
+  opacity: 0.26;
+}
+
+#thumbnailDiv:hover .hover-middle {
+  opacity: .75;
+}
+
+.hover-text {
+  background-color: #eceeef;
+  color: #55595c;
+  font-size: 16px;
+  padding: 16px 32px;
+}

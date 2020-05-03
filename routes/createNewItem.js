@@ -11,10 +11,10 @@ router.post('/', async (req, res) =>  {
     if(!req.session.user){
         console.log("user not logged in")
         res.render('pages/login', {loggedIn: false})
-    } 
+    }
     console.log("user logged in")
     res.render('pages/createNewItem')
-    console.log(createItemName)
+    //console.log(createItemName)
     //Idk whats happening here its 5:21 am and I gotta sleep
     // res.render('pages/createNewItem', {loggedIn: true})
 
@@ -53,4 +53,4 @@ router.post('/add', async(req, res) => {
     }
 });
 
-module.exports = router; 
+module.exports = router;

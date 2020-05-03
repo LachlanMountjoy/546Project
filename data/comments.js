@@ -1,6 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 const comments = mongoCollections.comments;
-const uuid = require('uuid/v4');
+const uuid = require('uuid');
 
 let exportedMethods = {
     async addComment(username, userID, comment, itemID){

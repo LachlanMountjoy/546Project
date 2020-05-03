@@ -1,6 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
-const uuid = require('uuid/v4');
+const uuid = require('uuid');
 const bcrypt = require('bcryptjs');
 
 let exportedMethods = {
@@ -25,7 +25,7 @@ let exportedMethods = {
     console.log("here")
     // if (!user) throw 'User not found';
     return user;
-  }, 
+  },
 
   async getUserbyUsername(username) {
     console.log("in username db")
@@ -33,7 +33,7 @@ let exportedMethods = {
     const user = await userCollection.findOne({username: username});
     // if (!user) throw 'User not found';
     return user;
-  }, 
+  },
 
   async addUser(firstName, lastName, email, location, password, username) {
     const userCollection = await users();

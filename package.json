@@ -18,6 +18,14 @@
   },
   "homepage": "https://github.com/LachlanMountjoy/546Project#readme",
   "dependencies": {
-    "mongo": "^0.1.0"
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.4",
+    "express-session": "^1.17.1",
+    "handlebars": "^4.7.6",
+    "mongo": "^0.1.0",
+    "mongodb": "^3.5.7",
+    "multer": "^1.4.2",
+    "uuid": "^8.0.0"
   }
 }
