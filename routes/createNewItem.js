@@ -11,10 +11,10 @@ router.post('/', async (req, res) =>  {
     if(!req.session.user){
         console.log("user not logged in")
         res.render('pages/login', {loggedIn: false})
-    }
+    } 
     console.log("user logged in")
     res.render('pages/createNewItem')
-    //console.log(createItemName)
+    console.log(createItemName)
     //Idk whats happening here its 5:21 am and I gotta sleep
     // res.render('pages/createNewItem', {loggedIn: true})
 
@@ -44,13 +44,13 @@ router.post('/add', async(req, res) => {
     // let sellerID = req.session.user
     let user = await userData.getUserbyUsername(req.session.user.username)
     console.log(user)
-    let sellerUN = user.username
+    let sellerID = user._id
     console.log("sellerID = " + sellerID)
     try {
-        itemData.addItem(createItemName, createItemDescription, sellerUN, catTokens, startingPrice, createImageLink)
+        itemData.addItem(createItemName, createItemDescription, sellerID, catTokens, startingPrice, createImageLink)
     } catch (error) {
         //nothing
     }
 });
 
-module.exports = router;
+module.exports = router; 
