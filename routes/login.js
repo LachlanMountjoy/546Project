@@ -119,6 +119,9 @@ router.post('/verifyUser', async (req, res) => {
     let match = false;
     console.log(user)
     try {
+        if(user == null){
+            res.render('pages/login', {loggedIn: false, error: "No account with that username"})
+        }
         console.log("creating match var")
         console.log("pass = " + user.password)
         match = await bcrypt.compare(password, user.password);
@@ -136,7 +139,7 @@ router.post('/verifyUser', async (req, res) => {
             res.render('pages/user', {user: user, loggedIn: true})
         } else {
             console.log("passwords dont watch")
-            res.render('pages/login', {loggedIn: false})
+            res.render('pages/login', {loggedIn: false, error: "Username and password don't match"})
         }
     } catch (e) {
         //Do nothing
