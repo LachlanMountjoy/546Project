@@ -1,6 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
-const uuid = require('uuid');
+// const uuid = require('uuid');
 const bcrypt = require('bcryptjs');
 
 let exportedMethods = {
@@ -19,7 +19,7 @@ let exportedMethods = {
   },
 
   async getUserbyEmail(email) {
-    console.log("in email db")
+    // console.log("in email db")
     const userCollection = await users();
     const user = await userCollection.findOne({email: email});
     console.log("here")
@@ -28,7 +28,7 @@ let exportedMethods = {
   },
 
   async getUserbyUsername(username) {
-    console.log("in username db")
+    // console.log("in username db")
     const userCollection = await users();
     const user = await userCollection.findOne({username: username});
     // if (!user) throw 'User not found';
@@ -36,16 +36,17 @@ let exportedMethods = {
   },
 
   async addUser(firstName, lastName, email, location, password, username) {
+    // console.log("in add user")
     const userCollection = await users();
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("pw in db = " + hashedPassword)
+    // console.log("pw in db = " + hashedPassword)
     let newUser = {
       username: username,
       firstName: firstName,
       lastName: lastName,
       email: email,
       location: location,
-      _id: uuid(),
+      // _id: uuid(),
       password: hashedPassword,
       itemsForSale: [],
       itemsBidOn:[],

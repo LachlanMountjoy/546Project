@@ -3,12 +3,11 @@ const comments = mongoCollections.comments;
 const uuid = require('uuid');
 
 let exportedMethods = {
-    async addComment(username, userID, comment, itemID){
+    async addComment(username, comment, itemID){
         const commentsCollection = await comments();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         let newComment = {
             username: username,
-            userID: userID,
             comment: comment,
             itemID: itemID,
             commentTime: time

@@ -52,12 +52,12 @@ router.post('/createUser', async (req, res) =>  {
         let cleanPassword = createPassword;
         let cleanEmail = createEmail;
 
-        console.log("clean username = " + cleanUsername)
-        console.log("clean password = " + cleanPassword)
-        console.log("clean email = " + cleanEmail)
-        console.log(createLN)
-        console.log(createFN)
-        console.log(createLocation)
+        // console.log("clean username = " + cleanUsername)
+        // console.log("clean password = " + cleanPassword)
+        // console.log("clean email = " + cleanEmail)
+        // console.log(createLN)
+        // console.log(createFN)
+        // console.log(createLocation)
 
         //In the future, these two checks can be done client side
         //Username already in db
@@ -67,12 +67,12 @@ router.post('/createUser', async (req, res) =>  {
         console.log("got user and user 2 from db")
 
 
-        console.log(user)
-        console.log(user2)
+        // console.log(user)
+        // console.log(user2)
 
-        if(user){
-            console.log("ASDADSF")
-        }
+        // if(user){
+        //     console.log("ASDADSF")
+        // }
 
         //Email or username already in DB
         if(user || user2){
@@ -86,7 +86,8 @@ router.post('/createUser', async (req, res) =>  {
             console.log("adding user to db")
             await userData.addUser(createFN, createLN, cleanEmail, createLocation, createPassword, cleanUsername)
         } catch (error) {
-
+            // console.log(error)
+            res.json(error)
         }
 
         //Setting session
@@ -98,26 +99,27 @@ router.post('/createUser', async (req, res) =>  {
             location: createLocation,
         };
         user = await userData.getUserbyUsername(cleanUsername);
+        // console.log("USER =============== " + user)
         res.render('pages/user', {user:user, loggedIn: true})
     }
 });
 
 router.post('/verifyUser', async (req, res) => {
-    console.log("verifying user info")
+    // console.log("verifying user info")
     const { username, password } = req.body
     try {
-        console.log("getting user")
+        // console.log("getting user")
         let user = await userData.getUserbyUsername(username)
     } catch(e) {
         console.log(e);
-        console.log("err from getUserbyUsername")
+        // console.log("err from getUserbyUsername")
         res.render('pages/login', {loggedIn:false})
     }
 
     //User is in DB
     let user = await userData.getUserbyUsername(username)
     let match = false;
-    console.log(user)
+    // console.log(user)
     try {
         if(user == null){
             res.render('pages/login', {loggedIn: false, error: "No account with that username"})
@@ -136,9 +138,10 @@ router.post('/verifyUser', async (req, res) => {
                 email: user.email,
                 location: user.location
             };
+            // console.log("user is " + user)
             res.render('pages/user', {user: user, loggedIn: true})
         } else {
-            console.log("passwords dont watch")
+            // console.log("passwords dont watch")
             res.render('pages/login', {loggedIn: false, error: "Username and password don't match"})
         }
     } catch (e) {
