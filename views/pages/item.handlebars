@@ -33,6 +33,7 @@
   <div id="statusDiv" value="{{status}}" hidden></div>
   <form method="POST" action="/items" name="itemDeleteForm" id="itemDeleteForm">
     <input class="itemId" name="itemId" id="itemId" value="{{itemId}}" hidden />
+    <input class="role" name="role" id="role" value="{{role}}" hidden />
     <input class="sellType" name="sellType" id="sellType" value="{{sellType}}" hidden />
     <div class="row align-items-center my-5">
       <div class="col-md-4">
@@ -93,7 +94,7 @@
 
         <a class="btn btn-primary" id="modifyLink" href="/items/modifyItem/{{id}}" hidden>Modify</a>
 
-        <button type="submit" class="btn btn-primary">Delete</button>
+        <button type="submit" id="deleteButton" class="btn btn-primary" hidden>Delete</button>
       </div>
       <!-- /.col-md-4 -->
     </div>
@@ -109,10 +110,13 @@
           <h2 class="card-title">Bidder</h2>
           <p class="card-text">There are currently {{bidderCount}} people bidding on this product. The current highest bid price is ${{currentPrice}} called by {{currentBidder}}.</p>
         </div>
-        <div class="card-footer">
+        {{!-- <div class="card-footer">
           <a class="btn btn-primary" id="bidLink" href="/bidItems/item/{{id}}" hidden>Bid</a>
-        </div>
+        </div> --}}
       </div>
+    </div>
+    <div class="card-footer">
+          <a class="btn btn-primary" id="bidLink" href="/bidItems/item/{{id}}" hidden>Bid</a>
     </div>
   </div>
 

@@ -188,7 +188,6 @@ router.post("/modifyItem/item", upload.single('inputImage'), async (req, res) =>
     if (req.file) {
       image = req.file.path;
     }
-    console.log(req.file);
 
     const inputCategories = req.body['modifyCategories'];
     const categories = inputCategories.split(',').map(x => x.trim());
@@ -224,9 +223,13 @@ router.post("/item", upload.single('inputImage'), async (req, res) => {
 
     const price = Number(req.body['inputPrice']);
 
-    const imageFile = req.body['inputImage'];
-    const image = req.file.path;
-    //console.log(req.file);
+    // const imageFile = req.body['inputImage'];
+    // const image = req.file.path;
+
+    let image = "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png";
+    if (req.file) {
+      image = req.file.path;
+    }
 
     const inputCategories = req.body['inputCategories'];
     const categories = inputCategories.split(',').map(x => x.trim());
