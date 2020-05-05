@@ -18,6 +18,13 @@ let exportedMethods = {
         return item;
     },
 
+    async getItemByUser(userId) {
+        if (!userId) throw 'you must provide an item id to search for ';
+        const itemCollection = await items();
+        const itemList = await itemCollection.find({ userId: userId }).toArray();
+        if (itemList === null) throw 'no item with the userId ';
+        return itemList;
+    },
     async removeItem(id) {
         if (!id) throw 'you must provide an id to search for';
         const itemCollection = await items();
