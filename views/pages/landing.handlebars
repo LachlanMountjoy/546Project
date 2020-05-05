@@ -1,5 +1,4 @@
 
-
   <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
     <div class="container">
@@ -11,7 +10,7 @@
     <div class="row">
                 {{#each items}}
       <div class="col-md-4">
-  
+
     <h3>{{itemName}}</h3>
     {{#if image}}
     <img src={{image}} alt="item" style="width:100x;height:100px;">
@@ -23,6 +22,16 @@
             {{/if}} <br>
         Posted at {{postedTime}}    
     </p>
+    {{_id}}
+    {{#if ../loggedIn}}
+        <form method="POST" class="create-new-comment" onsubmit="helloWorld()">
+            {{!-- <label for="createComment">Username</label> --}}
+            <input id="itemID"   name="itemID"   type="hidden" value={{_id}}>
+            <input id="username" name="username" type="hidden" value={{../user.username}}>
+            <textarea id="new-Comment" rows="2" cols="30"></textarea>
+            <button type="submit">submit</button>
+        </form>        
+    {{/if}}
     {{#each comments}}
         each of these lines represents a comment on the item <br>
     {{/each}}
