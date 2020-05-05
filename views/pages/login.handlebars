@@ -1,38 +1,38 @@
 
-<div>
-    <div>
-        <h3> Log into an existing account </h3>
-        {{#if error }}
+  <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+  <h1 class="h3 mb-3 font-weight-normal">Log into an existing account</h1>
+         {{#if error }}
         <div class="form-group">
             <div class="alert alert-danger">
                 {{ error }}
             </div>
         </div>
         {{/if}}
-        <form method="POST" id="login-form" action='/login/verifyUser'>
-            <label for="username">Username</label>
-            <input name="username" id="username" required>
-            <label for="password">Password</label>
-            <input name="password" id="password" required>
-            <button type="submit">submit</button>
-        </form>
-    </div>
-    <div>
+
+             <form class="form-signin" method="POST" id="login-form" action='/login/verifyUser'>
+            <label for="username" class="sr-only">Username</label>
+            <input name="username" id="username" class="form-control"  placeholder="username" required>
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+            <button  class="btn btn-lg btn-primary btn-block" type="submit">submit</button>
+            </form>
+        <div>
         <h3> Create new user </h3>
-        <form method="POST" id="create-user-form" action='/login/createUser'>
-            <label for="createUsername">Username</label>
-            <input name="createUsername" id="createUsername" required>
-            <label for="createPassword">Password</label>
-            <input name="createPassword" id="createPassword" required>
-            <label for="createEmail">Email</label>
-            <input name="createEmail" id="createEmail" required>
-            <label for="createFN">First Name</label>
-            <input name="createFN" id="createFN" required>
-            <label for="createLN">Last Name</label>
-            <input name="createLN" id="createLN" required>
-            <label for="createLocation">Location</label>
-            <input name="createLocation" id="createLocation" required>
-            <button type="submit">submit</button>
+        <form class="form-signin" method="POST" id="create-user-form" action='/login/createUser'>
+            <label for="createUsername" class="sr-only">Username</label>
+            <input name="createUsername" id="createUsername" class="form-control"  placeholder="username" required>
+            <label for="createPassword" class="sr-only">Password</label>
+            <input name="createPassword" id="createPassword" class="form-control" placeholder="password" required>
+            <label for="createEmail" class="sr-only">Email</label>
+            <input name="createEmail" id="createEmail" class="form-control"  placeholder="email"  type="email" required>
+            <label for="createFN" class="sr-only">First Name</label>
+            <input name="createFN" id="createFN" class="form-control" placeholder="first name"  required>
+            <label for="createLN" class="sr-only">Last Name</label>
+            <input name="createLN" id="createLN" class="form-control" placeholder="last name"  required>
+            <label for="createLocation" class="sr-only">Location</label>
+            <input name="createLocation" id="createLocation" class="form-control" placeholder="location"required>
+            <button type="submit" class="btn btn-lg btn-primary btn-block">submit</button>
         </form>
     </div>
-</div>
+
+    

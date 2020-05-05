@@ -14,7 +14,7 @@ const userData = data.users
 const constructorMethod = (app) => {
 	app.get('/', async (req, res) => {
 		const items = await itemData.getAllItems()
-		console.log(items)
+		//console.log(items)
 		if(req.session.user){
 			res.render('pages/landing', {loggedIn: true, items:items});
 		} else {

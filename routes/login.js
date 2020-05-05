@@ -84,6 +84,12 @@ router.post('/createUser', async (req, res) =>  {
         //Creating a new user
         try {
             console.log("adding user to db")
+            console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
+            console.log(createFN)
+            console.log(createLN)
+            console.log(cleanEmail)
+            console.log(cleanUsername)
+            console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
             await userData.addUser(createFN, createLN, cleanEmail, createLocation, createPassword, cleanUsername)
         } catch (error) {
 

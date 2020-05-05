@@ -13,6 +13,8 @@ router.get("/", (req, res) => {
         //Get user info to display
         console.log(req.body.user)
         user = userData.getUserByUsername(req.body.user.username)
+
+
         res.render("pages/user", {user: user})
     }
 });
