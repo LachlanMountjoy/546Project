@@ -13,7 +13,11 @@ const itemData = data.items
 const constructorMethod = (app) => {
 	app.get('/', async (req, res) => {
 		const items = await itemData.getAllItems()
+
+		//console.log(items)
+
 		// console.log(items)
+
 		if(req.session.user){
 			res.render('pages/landing', {loggedIn: true, items:items, user:req.session.user});
 		} else {

@@ -1,17 +1,53 @@
-<h2> Username: {{user.username}} </h2>      
-<h3> First Name: {{user.firstName}} </h3>   
-<h3> Last Name: {{user.lastName}} </h3>     
-<p>  email: {{user.email}}</p>              
-<p> Location: {{user.location}} </p>        
 
-{{!-- Use database functions to get all the info about these items and display them here --}}
-<h2> Items you've bid on </h2>
-{{#each user.itemsBidOn}}
-    <h3>Each of these headers represents an item that the user has bid on</h3>
-{{/each}}
 
-{{!-- Use database functions to get all the info about these items and display them here --}}
-<h2> Items you're selling </h2>
-{{#each user.itemsForSale}}
-    <h3>Each of these headers represents an item that the user is selling</h3>
-{{/each}}
+
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-3">Hello {{user.firstName}}! </h1>
+      <p>Information:</p>
+      <ul>
+        <li> Username: {{user.username}} </li>      
+        <li> First Name: {{user.firstName}} </li>   
+        <li> Last Name: {{user.lastName}} </li>     
+        <li>  email: {{user.email}}</li>              
+        <li> Location: {{user.location}} </li>  
+      </ul>
+    
+    </div>
+  </div>
+
+    <div class="container">
+    <!-- Example row of columns -->
+    <h1>Items you're selling</h1>
+    <a href="/items/addItem"> Create a new listing </a>
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-md-4">
+          <p>Items you are selling here</p>
+          {{#each user.itemsForSale}}
+            <h3>Each of these headers represents an item that the user is selling</h3>
+            <p>{{itemsForSale}}</p>
+        {{/each}}
+      </div>
+    </div>
+        <hr>
+        <br>
+        <br>
+  <div class="container">
+    <!-- Example row of columns -->
+    <h1>Items you've bid on</h1>
+    <div class="row">
+      <div class="col-md-4">
+          <p>Items you are bidding here</p>
+        {{#each user.itemsBidOn}}
+        <h2>Each of these headers represents an item that the user has bid on</h2>
+        {{/each}}
+      </div>
+    </div>
+
+ <hr>
+  </div> <!-- /container -->
+
+

@@ -1,5 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
+
 // const uuid = require('uuid');
 const bcrypt = require('bcryptjs');
 
@@ -31,6 +32,7 @@ let exportedMethods = {
     // console.log("in username db")
     const userCollection = await users();
     const user = await userCollection.findOne({username: username});
+    console.log(user);
     // if (!user) throw 'User not found';
     return user;
   },
@@ -39,6 +41,15 @@ let exportedMethods = {
     // console.log("in add user")
     const userCollection = await users();
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    console.log(firstName)
+    console.log(lastName)
+    console.log( email)
+    console.log(username)
+    console.log("pw in db = " + hashedPassword)
+    console.log("here")
+
+
     // console.log("pw in db = " + hashedPassword)
     let newUser = {
       username: username,
@@ -52,8 +63,12 @@ let exportedMethods = {
       itemsBidOn:[],
       boughtItems: [],
     };
+    console.log(newUser);
 
     const newInsertInformation = await userCollection.insertOne(newUser);
+    console.log("here2222");
+    console.log(newInsertInformation);
+    console.log("here3333");
     if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
     return await this.getUserById(newInsertInformation.insertedId);
   },
@@ -82,6 +97,7 @@ let exportedMethods = {
     };
 
     const userCollection = await users();
+
     const updateInfo = await userCollection.updateOne({_id: id}, {$set: userUpdateInfo});
     if (!updateInfo.matchedCount && !updateInfo.modifiedCount) throw 'Update failed';
 
