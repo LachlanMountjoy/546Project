@@ -29,9 +29,10 @@ let exportedMethods = {
   },
 
   async getUserbyUsername(username) {
-    // console.log("in username db")
+    console.log("in username db")
     const userCollection = await users();
     const user = await userCollection.findOne({username: username});
+    console.log("here i am");
     console.log(user);
     // if (!user) throw 'User not found';
     return user;
@@ -66,9 +67,8 @@ let exportedMethods = {
     console.log(newUser);
 
     const newInsertInformation = await userCollection.insertOne(newUser);
-    console.log("here2222");
+ 
     console.log(newInsertInformation);
-    console.log("here3333");
     if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
     return await this.getUserById(newInsertInformation.insertedId);
   },

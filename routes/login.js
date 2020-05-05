@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 
 const data = require('../data');
 const userData = data.users;
+const itemData = data.items;
+const ObjectId = require('mongodb').ObjectID;
 
 const saltRounds = 10
 
@@ -14,17 +16,19 @@ router.post('/', async (req, res) =>  {
         console.log("user not logged in")
         res.render('pages/login', {loggedIn: false})
     } else {
-        console.log("User already logged in, get user info and show their page")
-        console.log(req.session.user)
+        console.log("User already logged in, get user info and show their page");
+        console.log(req.session.user);
         try {
-            let user = await userData.getUserbyUsername(req.session.username)
+            let user = await userData.getUserbyUsername(req.session.username);
         } catch (error) {
             console.log(error)
         }
-        console.log(req.session.user.username)
-        let user = await userData.getUserbyUsername(req.session.user.username)
-        console.log("user = " + user)
-        res.render('pages/user', {user:user, loggedIn: true})
+        console.log(req.session.user.username);
+        let user = await userData.getUserbyUsername(req.session.user.username);
+        console.log("user = " + user.itemsForSale);
+       let items1 = await itemData.getItemByUser(req.session.user.username);
+       console.log(items1);
+        res.render('pages/user', {user:user, items1:items1, loggedIn: true});
     }
 });
 
@@ -84,12 +88,7 @@ router.post('/createUser', async (req, res) =>  {
         //Creating a new user
         try {
             console.log("adding user to db")
-            console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
-            console.log(createFN)
-            console.log(createLN)
-            console.log(cleanEmail)
-            console.log(cleanUsername)
-            console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
+           
             await userData.addUser(createFN, createLN, cleanEmail, createLocation, createPassword, cleanUsername)
         } catch (error) {
             // console.log(error)
@@ -145,7 +144,9 @@ router.post('/verifyUser', async (req, res) => {
                 location: user.location
             };
             // console.log("user is " + user)
-            res.render('pages/user', {user: user, loggedIn: true})
+           let items1 = await itemData.getItemByUser(req.session.user.username);
+           console.log(items1);
+            res.render('pages/user', {user: user, items1: items1, loggedIn: true});
         } else {
             // console.log("passwords dont watch")
             res.render('pages/login', {loggedIn: false, error: "Username and password don't match"})
