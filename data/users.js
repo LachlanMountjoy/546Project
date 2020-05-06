@@ -28,6 +28,7 @@ let exportedMethods = {
     return user;
   },
 
+  
   async getUserbyUsername(username) {
     console.log("in username db")
     const userCollection = await users();

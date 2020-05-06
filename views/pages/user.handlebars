@@ -46,12 +46,20 @@
     <!-- Example row of columns -->
     <h1>Items you've bid on</h1>
     <div class="row">
+         {{#each items2}}
       <div class="col-md-4">
-          <p>Items you are bidding here</p>
-        {{#each user.itemsBidOn}}
-        <h2>Each of these headers represents an item that the user has bid on</h2>
-        {{/each}}
+            <h3>{{itemName}}</h3>
+            <div class="class1"><img src={{image}} alt="item" id="image1"></div>
+            <div class= "class2">  <p>ID:{{_id}}</p>
+            <p>SellType: {{sellType}} </p>
+            <p>Price: ${{price}} </p>
+            <p>{{description}}</p>
+            <p>Date Posted: {{postDate}}</p>
+            <p>Status: {{status}}</p>
+            </div>
+          
       </div>
+      {{/each}}
     </div>
 
  <hr>

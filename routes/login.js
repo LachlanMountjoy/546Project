@@ -28,7 +28,9 @@ router.post('/', async (req, res) =>  {
         console.log("user = " + user.itemsForSale);
        let items1 = await itemData.getItemByUser(req.session.user.username);
        console.log(items1);
-        res.render('pages/user', {user:user, items1:items1, loggedIn: true});
+       let items2 = await itemData.getItemByBidder(req.session.user.username);
+       console.log(items2);
+        res.render('pages/user', {user: user, items1: items1, items2: items2, loggedIn: true});
     }
 });
 
@@ -146,7 +148,9 @@ router.post('/verifyUser', async (req, res) => {
             // console.log("user is " + user)
            let items1 = await itemData.getItemByUser(req.session.user.username);
            console.log(items1);
-            res.render('pages/user', {user: user, items1: items1, loggedIn: true});
+           let items2 = await itemData.getItemByBidder(req.session.user.username);
+           console.log(items2);
+            res.render('pages/user', {user: user, items1: items1, items2: items2, loggedIn: true});
         } else {
             // console.log("passwords dont watch")
             res.render('pages/login', {loggedIn: false, error: "Username and password don't match"})

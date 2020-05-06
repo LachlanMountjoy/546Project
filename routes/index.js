@@ -24,6 +24,26 @@ const constructorMethod = (app) => {
 			res.render('pages/landing', {loggedIn: false, items:items})
 		}
 	});
+	app.post('/search', async (req, res) => {
+		const {search}=req.body;
+		const cleansearch = search.toLowerCase();
+		console.log(cleansearch);
+		let items = [];
+		if(search != ''){
+			items = await itemData.getItemByCategory(cleansearch);
+		}else{
+			items = await itemData.getAllItems();
+		}
+		//console.log(items)
+
+		// console.log(items)
+
+		if(req.session.user){
+			res.render('pages/landing', {loggedIn: true, items:items, user:req.session.user});
+		} else {
+			res.render('pages/landing', {loggedIn: false, items:items})
+		}
+	});
 	app.use('/comments', 		commentRoutes)
 	app.use('/logout', 			logoutRoutes)
 	app.use('/login', 			loginRoutes);
