@@ -65,6 +65,11 @@ let exportedMethods = {
         if (typeof price != "number" || price <= 0 ) throw 'you should provide the valid price of the item';
         if (!sellType) throw 'you shoule choose a type of sell';
         if (!auctionExpiration) throw 'you should provide auctionExpiration'
+        let cleancat = [];
+        for (var i = 0; i < categories.length; i++) {
+        cleancat.push(categories[i].toLowerCase());
+}
+
         const itemCollection = await items();
         const time = new Date();
         let newItem = {
@@ -72,7 +77,7 @@ let exportedMethods = {
             auctionExpiration: auctionExpiration,
             itemName: itemName,
             price: price,
-            categories: categories,
+            categories: cleancat,
             userId: userId,
             description: description,
             image: image,

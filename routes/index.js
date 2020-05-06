@@ -26,12 +26,11 @@ const constructorMethod = (app) => {
 	});
 	app.post('/search', async (req, res) => {
 		const {search}=req.body;
-		console.log("h");
-		console.log(search);
-		console.log("h");
+		const cleansearch = search.toLowerCase();
+		console.log(cleansearch);
 		let items = [];
 		if(search != ''){
-			items = await itemData.getItemByCategory(search);
+			items = await itemData.getItemByCategory(cleansearch);
 		}else{
 			items = await itemData.getAllItems();
 		}
