@@ -9,17 +9,19 @@
     </p>
     {{_id}}
     {{#if ../loggedIn}}
-        <form method="POST" class="create-new-comment" onsubmit="helloWorld()">
-            {{!-- <label for="createComment">Username</label> --}}
+        <form id="new-comment-form">
             <input id="itemID"   name="itemID"   type="hidden" value={{_id}}>
-            <input id="username" name="username" type="hidden" value={{../user.username}}>
-            <textarea id="new-Comment" rows="2" cols="30"></textarea>
-            <button type="submit">submit</button>
-        </form>        
+            <input id="username" name="username" type="hidden" value={{../user.username}}> 
+            {{!-- <label>Comment <input id="new-comment-input" type="text" /></label>   --}}
+            <label>Comment <textarea id="new-comment"></textarea></label>
+            <input type="submit" value="Add comment" />
+        </form>   
     {{/if}}
     {{#each comments}}
         each of these lines represents a comment on the item <br>
     {{/each}}
+    <div id="new-content">
+    </div>
 {{/each}}
 
 <p>end of posts</p>

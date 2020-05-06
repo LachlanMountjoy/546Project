@@ -3,9 +3,15 @@ const comments = mongoCollections.comments;
 const uuid = require('uuid');
 
 let exportedMethods = {
+    async getCommentById(id){
+        const commentCollection = await comments();
+        const comment = await commentCollection.findOne({_id: id});
+        return comment;
+    },
+
     async addComment(username, comment, itemID){
         const commentsCollection = await comments();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var time = Date()
         let newComment = {
             username: username,
             comment: comment,
@@ -15,12 +21,6 @@ let exportedMethods = {
         const newInsertInformation = await commentsCollection.insertOne(newComment);
         if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
         return await this.getCommentById(newInsertInformation.insertedId);
-    },
-
-    async getCommentByID(){
-        const commentCollection = await comments();
-        const comment = await commentCollection.findOne({_id: id});
-        return comment;
     },
 };
 module.exports = exportedMethods;
