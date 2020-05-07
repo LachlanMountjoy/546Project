@@ -11,9 +11,9 @@ router.get("/", (req, res) => {
         res.render("pages/login")
     } else {
         //Get user info to display
-        console.log(req.body.user)
-        user = userData.getUserByUsername(req.body.user.username)
-        res.render("pages/user", {user: user})
+        console.log(req.body.user);
+        user = userData.getUserByUsername(req.body.user.username);
+        res.render("pages/user", {user: user});
     }
 });
 

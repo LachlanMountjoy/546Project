@@ -18,6 +18,31 @@ let exportedMethods = {
         return item;
     },
 
+    async getItemByUser(userId) {
+        if (!userId) throw 'you must provide an item id to search for ';
+        const itemCollection = await items();
+        const itemList = await itemCollection.find({ userId: userId }).toArray();
+        if (itemList === null) throw 'no item with the userId ';
+        return itemList;
+    },
+
+    async getItemByCategory(cat) {
+        if (!cat) throw 'you must provide an item id to search for ';
+        const itemCollection = await items();
+        console.log("here1");
+        const itemList = await itemCollection.find({ categories: cat }).toArray();
+        console.log("here2");
+        if (itemList === null) throw 'no item with the userId ';
+        return itemList;
+    },
+
+    async getItemByBidder(userId) {
+        if (!userId) throw 'you must provide an item id to search for ';
+        const itemCollection = await items();
+        const itemList = await itemCollection.find({ bidders: userId }).toArray();
+        if (itemList === null) throw 'no item with the userId ';
+        return itemList;
+    },
     async removeItem(id) {
         if (!id) throw 'you must provide an id to search for';
         const itemCollection = await items();
@@ -63,6 +88,11 @@ let exportedMethods = {
         if (typeof price != "number" || price <= 0 ) throw 'you should provide the valid price of the item';
         if (!sellType) throw 'you shoule choose a type of sell';
         if (!auctionExpiration) throw 'you should provide auctionExpiration'
+        let cleancat = [];
+        for (var i = 0; i < categories.length; i++) {
+        cleancat.push(categories[i].toLowerCase());
+}
+
         const itemCollection = await items();
         const time = new Date();
         let newItem = {
@@ -70,7 +100,7 @@ let exportedMethods = {
             auctionExpiration: auctionExpiration,
             itemName: itemName,
             price: price,
-            categories: categories,
+            categories: cleancat,
             userId: userId,
             description: description,
             image: image,

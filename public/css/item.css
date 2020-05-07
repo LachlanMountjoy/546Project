@@ -16,6 +16,12 @@ body {
   backface-visibility: hidden;
 }
 
+img{
+  width:200px;
+  height:150px;
+}
+
+
 .hover-middle {
   transition: .5s ease;
   opacity: 0;
