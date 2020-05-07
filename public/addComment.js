@@ -1,6 +1,6 @@
 (function ($) {
   
-    var myNewTaskForm = $('#new-comment-form'),
+    var myNewTaskForm = $('#create-new-comment'),
       newNameInput = $('#new-comment'),
       itemID = $('#itemID')
       username = $('#username')
