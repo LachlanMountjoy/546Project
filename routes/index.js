@@ -5,6 +5,7 @@ const logoutRoutes 			= require('./logout');
 const createNewItemRoutes 	= require('./createNewItem')
 const itemRoutes            = require("./items");
 const bidItemRoutes         = require("./bidItems");
+const apiRoutes				= require("./api")
 // const commentRoutes 		= require("./comments")
 
 const data = require('../data')
@@ -45,7 +46,8 @@ const constructorMethod = (app) => {
 		}
 	});
 	// app.use('/comments', 		commentRoutes)
-	app.use('/logout', 			logoutRoutes)
+	app.use('/logout', 			logoutRoutes);
+	app.use('/api',				apiRoutes);
 	app.use('/login', 			loginRoutes);
     app.use('/posts', 			postRoutes);
 	app.use('/users', 			userRoutes);

@@ -16,12 +16,17 @@ router.post('/todo/complete/:id', function (request, response) {
   response.render('partials/todo_item', { layout: null, ...updatedData });
 });
 
-router.post('/todo.html', async function (request, response) {
+router.post('/comment.html', async function (request, response) {
+    console.log("in api/comment.html")
+    // console.log(request.body.username)
+    // console.log(request.body.comment)
+    // console.log(request.body.itemID)
     const newTodo = await commentData.addComment(
         xss(request.body.username),
         xss(request.body.comment),
         xss(request.body.itemID)
     );
+    console.log(request.body.itemID)
     const addComment = await itemData.addCommentToItem(request.body.itemID, newTodo._id)
     response.render('partials/comment', { layout: null, ...newTodo });
 });

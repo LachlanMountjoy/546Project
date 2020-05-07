@@ -1,11 +1,10 @@
 (function ($) {
   
-    var myNewTaskForm = $('#create-new-comment'),
-      newNameInput = $('#new-comment'),
-      itemID = $('#itemID')
-      username = $('#username')
-    //   newDecriptionArea = $('#new-task-description'),
-      todoArea = $('#todo-area');
+    var myNewTaskForm = $('.create-new-comment'),
+        commentInput  = $('.new-comment'),
+        itemIDInput   = $('.itemID'),
+        usernameInput = $('.username'),
+        todoArea      = $('#todo-area');
   
     function bindEventsToTodoItem(todoItem) {
       todoItem.find('.finishItem').on('click', function (event) {
@@ -33,32 +32,35 @@
     myNewTaskForm.submit(function (event) {
         event.preventDefault();
         console.log("submission pressed")
-        var newName = newNameInput.val();
-        // var newDescription = newDecriptionArea.val();
-        var newContent = $('#new-content');
-        console.log("New name is " + newName)
-        console.log(itemID.val())
-        console.log(username.val())
-        if (newName) {
+        var comment  = commentInput.val();
+        var itemID   = itemIDInput.val()
+        var username = usernameInput.val()
+
+        console.log(comment)
+        console.log(itemID)
+        console.log(username)
+        if (comment) {
+            console.log("there is a comment")
             var requestConfig = {
                 method: 'POST',
-                url: '/api/todo.html',
+                url: '/api/comment.html',
                 contentType: 'application/json',
                 data: JSON.stringify({
-                username: username.val(),
-                comment: newName,
-                itemID: itemID.val()
-                // description: newDescription
+                  comment: comment,
+                  itemID: itemID,
+                  username: username
                 })
-            };
+            }
             console.log(requestConfig)
             $.ajax(requestConfig).then(function (responseMessage) {
-                console.log(responseMessage);
+                console.log("response message = " + responseMessage);
                 var newElement = $(responseMessage);
                 bindEventsToTodoItem(newElement);
     
                 todoArea.append(newElement);
             });
+        } else {
+          console.log("no comment was passed")
         }
     });
 })(window.jQuery);

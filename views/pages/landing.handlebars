@@ -20,7 +20,7 @@
         <h3>{{itemName}}</h3>
         <p>Sold by : {{userId}}</p>
         {{#if image}}
-            <img src={{image}} alt="item" id="image1">
+            <img src={{image}} alt="item" class="image1">
         {{/if}}
         <p>{{description}} <br>
             Min bid of {{price}} 
@@ -32,9 +32,9 @@
         {{#if ../loggedIn}}
             <form method="POST" class="create-new-comment">
                 {{!-- <label for="createComment">Username</label> --}}
-                <input id="itemID"   name="itemID"   type="hidden" value={{_id}}>
-                <input id="username" name="username" type="hidden" value={{../user.username}}>
-                <textarea id="new-Comment" rows="2" cols="30" placeholder="Add a comment..."></textarea>
+                <input class="itemID"   name="itemID"   type="hidden" value={{_id}}>
+                <input class="username" name="username" type="hidden" value={{../user.username}}>
+                <textarea class="new-comment" rows="2" cols="30" placeholder="Add a comment..."></textarea>
                 <button type="submit">submit</button>
             </form> 
 
@@ -48,6 +48,6 @@
     {{/each}}
     </div>
         <hr>
-  </div> <!-- /container -->
+    </div> <!-- /container -->
 
 

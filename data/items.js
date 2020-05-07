@@ -78,6 +78,7 @@ let exportedMethods = {
       },
 
     async addItem(sellType, auctionExpiration, itemName, categories, description, image, userId, price) {
+        console.log("in add item")
         if (!itemName) throw 'You should provide a name of your item';
         if (!categories || !Array.isArray(categories)) throw 'you should provide an array of categories';
         //if (categories.length <= 0) throw 'You must provide at least one category';
