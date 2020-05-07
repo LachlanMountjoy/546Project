@@ -106,7 +106,8 @@ let exportedMethods = {
             image: image,
             postDate: time,
             status : 'selling',
-            buyer: ''
+            buyer: '',
+            comments: []
         };
     const insertInfo = await itemCollection.insertOne(newItem);
     if (insertInfo.insertedCount === 0) throw 'could not add new item';

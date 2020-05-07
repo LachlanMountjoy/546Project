@@ -1,52 +1,51 @@
 
-  <!-- Main jumbotron for a primary marketing message or call to action -->
-  <div class="jumbotron">
-    <div class="container">
-      <h1 class="display-2"> For Sale </h1>
-      <form method="POST" class="search" action='/search/'>
-        <input type="text" name="search" id= "search" placeholder="Search..">
-        <button type="submit">Go!</button>
-      </form>
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-2"> For Sale </h1>
+            <form method="POST" class="search" action='/search/'>
+                <input type="text" name="search" id= "search" placeholder="Search..">
+                <button type="submit">Go!</button>
+            </form>
+        </div>
     </div>
-  </div>
 
     <div class="container">
     <div class="row">
-                {{#each items}}
-                {{#if buyer}}
-                {{else }}
-      <div class="col-md-4">
+    {{#each items}}
+        {{#if buyer}}
+        {{else }}
+        <div class="col-md-4">
 
-    <h3>{{itemName}}</h3>
-    <p>Sold by : {{userId}}</p>
-    {{#if image}}
-    <img src={{image}} alt="item" id="image1">
-    {{/if}}
-    <p>{{description}} <br>
-        Min bid of {{price}} 
-            {{#if highestBidder}} 
-                by {{highestBidder}} 
-            {{/if}} <br>
-        Posted at {{postDate}}    
-    </p>
-    {{#if ../loggedIn}}
+        <h3>{{itemName}}</h3>
+        <p>Sold by : {{userId}}</p>
+        {{#if image}}
+            <img src={{image}} alt="item" id="image1">
+        {{/if}}
+        <p>{{description}} <br>
+            Min bid of {{price}} 
+                {{#if highestBidder}} 
+                    by {{highestBidder}} 
+                {{/if}} <br>
+            Posted at {{postDate}}    
+        </p>
+        {{#if ../loggedIn}}
+            <form method="POST" class="create-new-comment">
+                {{!-- <label for="createComment">Username</label> --}}
+                <input id="itemID"   name="itemID"   type="hidden" value={{_id}}>
+                <input id="username" name="username" type="hidden" value={{../user.username}}>
+                <textarea id="new-Comment" rows="2" cols="30" placeholder="Add a comment..."></textarea>
+                <button type="submit">submit</button>
+            </form> 
 
-        <form method="POST" class="create-new-comment" onsubmit="helloWorld()">
-            {{!-- <label for="createComment">Username</label> --}}
-            <input id="itemID"   name="itemID"   type="hidden" value={{_id}}>
-            <input id="username" name="username" type="hidden" value={{../user.username}}>
-            <textarea id="new-Comment" rows="2" cols="30" placeholder="Add a comment..."></textarea>
-            <button type="submit">submit</button>
-        </form> 
+        {{/if}}
+            {{#each comments}}
+                each of these lines represents a comment on the item <br>
+            {{/each}}
 
-    {{/if}}
-    {{#each comments}}
-        each of these lines represents a comment on the item <br>
+        </div>
+        {{/if}}
     {{/each}}
-
-      </div>
-      {{/if}}
-      {{/each}}
     </div>
         <hr>
   </div> <!-- /container -->

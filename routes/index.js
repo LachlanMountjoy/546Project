@@ -5,7 +5,7 @@ const logoutRoutes 			= require('./logout');
 const createNewItemRoutes 	= require('./createNewItem')
 const itemRoutes            = require("./items");
 const bidItemRoutes         = require("./bidItems");
-const commentRoutes 		= require("./comments")
+// const commentRoutes 		= require("./comments")
 
 const data = require('../data')
 const itemData = data.items
@@ -44,7 +44,7 @@ const constructorMethod = (app) => {
 			res.render('pages/landing', {loggedIn: false, items:items})
 		}
 	});
-	app.use('/comments', 		commentRoutes)
+	// app.use('/comments', 		commentRoutes)
 	app.use('/logout', 			logoutRoutes)
 	app.use('/login', 			loginRoutes);
     app.use('/posts', 			postRoutes);
