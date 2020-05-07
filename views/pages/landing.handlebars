@@ -14,36 +14,37 @@
     <div class="row">
     {{#each items}}
         {{#if buyer}}
-        {{else }}
-        <div class="col-md-4">
+            {{else }}
+            <div class="col-md-4">
 
-        <h3>{{itemName}}</h3>
-        <p>Sold by : {{userId}}</p>
-        {{#if image}}
-            <img src={{image}} alt="item" class="image1">
-        {{/if}}
-        <p>{{description}} <br>
-            Min bid of {{price}} 
-                {{#if highestBidder}} 
-                    by {{highestBidder}} 
-                {{/if}} <br>
-            Posted at {{postDate}}    
-        </p>
-        {{#if ../loggedIn}}
-            <form method="POST" class="create-new-comment">
-                {{!-- <label for="createComment">Username</label> --}}
-                <input class="itemID"   name="itemID"   type="hidden" value={{_id}}>
-                <input class="username" name="username" type="hidden" value={{../user.username}}>
-                <textarea class="new-comment" rows="2" cols="30" placeholder="Add a comment..."></textarea>
-                <button type="submit">submit</button>
-            </form> 
+            <h3>{{itemName}}</h3>
+            <p>Sold by : {{userId}}</p>
+            {{#if image}}
+                <img src={{image}} alt="item" class="image1">
+            {{/if}}
+            <p>{{description}} <br>
+                Min bid of {{price}} 
+                    {{#if highestBidder}} 
+                        by {{highestBidder}} 
+                    {{/if}} <br>
+                Posted at {{postDate}}    
+            </p>
+            {{#if ../loggedIn}}
+                <form method="POST" class="create-new-comment">
+                    {{!-- <label for="createComment">Username</label> --}}
+                    <input class="itemID"   name="itemID"   type="hidden" value={{_id}}>
+                    <input class="username" name="username" type="hidden" value={{../user.username}}>
+                    <textarea class="new-comment" rows="2" cols="30" placeholder="Add a comment..."></textarea>
+                    <button type="submit">submit</button>
+                </form> 
 
-        {{/if}}
+            {{/if}}
             {{#each comments}}
                 each of these lines represents a comment on the item <br>
             {{/each}}
-
-        </div>
+            <div class="new-comment">
+            </div>
+            </div>
         {{/if}}
     {{/each}}
     </div>

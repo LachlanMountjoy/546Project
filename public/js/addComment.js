@@ -1,33 +1,33 @@
 (function ($) {
   
-    var myNewTaskForm = $('.create-new-comment'),
-        commentInput  = $('.new-comment'),
-        itemIDInput   = $('.itemID'),
-        usernameInput = $('.username'),
-        todoArea      = $('#todo-area');
+    var myNewTaskForm  = $('.create-new-comment'),
+        commentInput   = $('.new-comment'),
+        itemIDInput    = $('.itemID'),
+        usernameInput  = $('.username'),
+        newCommentArea = $('.new-comment');
   
-    function bindEventsToTodoItem(todoItem) {
-      todoItem.find('.finishItem').on('click', function (event) {
-        event.preventDefault();
-        var currentLink = $(this);
-        var currentId = currentLink.data('id');
+    // function bindEventsToTodoItem(todoItem) {
+    //   todoItem.find('.finishItem').on('click', function (event) {
+    //     event.preventDefault();
+    //     var currentLink = $(this);
+    //     var currentId = currentLink.data('id');
   
-        var requestConfig = {
-          method: 'POST',
-          url: '/api/todo/complete/' + currentId
-        };
+    //     var requestConfig = {
+    //       method: 'POST',
+    //       url: '/api/todo/complete/' + currentId
+    //     };
   
-        $.ajax(requestConfig).then(function (responseMessage) {
-          var newElement = $(responseMessage);
-          bindEventsToTodoItem(newElement);
-          todoItem.replaceWith(newElement);
-        });
-      });
-    }
+    //     $.ajax(requestConfig).then(function (responseMessage) {
+    //       var newElement = $(responseMessage);
+    //       bindEventsToTodoItem(newElement);
+    //       todoItem.replaceWith(newElement);
+    //     });
+    //   });
+    // }
   
-    todoArea.children().each(function (index, element) {
-      bindEventsToTodoItem($(element));
-    });
+    // todoArea.children().each(function (index, element) {
+    //   bindEventsToTodoItem($(element));
+    // });
   
     myNewTaskForm.submit(function (event) {
         event.preventDefault();
@@ -55,9 +55,9 @@
             $.ajax(requestConfig).then(function (responseMessage) {
                 console.log("response message = " + responseMessage);
                 var newElement = $(responseMessage);
-                bindEventsToTodoItem(newElement);
+                // bindEventsToTodoItem(newElement);
     
-                todoArea.append(newElement);
+                newCommentArea.append(newElement);
             });
         } else {
           console.log("no comment was passed")
