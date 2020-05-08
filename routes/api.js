@@ -22,12 +22,11 @@ router.post('/comment.html', async function (request, response) {
     // console.log(request.body.comment)
     // console.log(request.body.itemID)
     const newTodo = await commentData.addComment(
-        xss(request.body.username),
+        xss(request.session.user.username),
         xss(request.body.comment),
         xss(request.body.itemID)
     );
-    console.log(request.body.itemID)
-    const addComment = await itemData.addCommentToItem(request.body.itemID, newTodo._id)
+    const addComment = await itemData.addCommentToItem(request.body.itemID, newTodo._id, request.session.user.username, request.body.comment)
     response.render('partials/comment', { layout: null, ...newTodo });
 });
 

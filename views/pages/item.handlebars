@@ -48,7 +48,7 @@
           <div class="col-md-8">
             <div class="form-group">
               <h1>{{itemName}}</h1>
-              <small class="form-text text-muted">&nbsp;&nbsp;&nbsp;&nbsp;by {{userId}}</small>
+              <small class="form-text text-muted">&nbsp;&nbsp;&nbsp;&nbsp;by {{userID}}</small>
               <small class="form-text text-muted">&nbsp;&nbsp;&nbsp;&nbsp;{{postDate}}</small>
             </div>
 
@@ -93,7 +93,7 @@
         <!-- /.row -->
       </form>
     </div>
-
+    {{!-- {{comments}} --}}
     <!-- Content Row -->
     <div class="row">
       <div class="bidItemDiv" id="bidItemDiv" hidden>
@@ -111,6 +111,24 @@
         <a class="btn btn-primary" id="bidLink" href="/bidItems/item/{{id}}" hidden>Bid</a>
       </div>
     </div>
+  </div>
+  {{req.session.user}}
+  <form method="POST" class="create-new-comment">
+      {{!-- <label for="createComment">Username</label> --}}
+      <input class="itemID"   name="itemID"   type="hidden" value={{itemId}}>
+      <input class="username" name="username" type="hidden" value={{userID}}>
+      <textarea class="new-comment" rows="2" cols="30" placeholder="Add a comment..."></textarea>
+      <button type="submit">submit</button>
+  </form> 
+  {{ currUser }}
+  {{#each listOfComments}}
+    <div class="comment">
+      <h3>{{this.username}}</h3> <br>
+      <p>{{this.comment}}  <br>
+      {{this.commentTime}} </p>
+    </div>
+  {{/each}}
+  <div class="new-comment">
   </div>
 
   {{!-- <!-- /.col-md-4 -->

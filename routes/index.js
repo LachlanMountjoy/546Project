@@ -20,6 +20,7 @@ const constructorMethod = (app) => {
 		// console.log(items)
 
 		if(req.session.user){
+			console.log(items)
 			res.render('pages/landing', {loggedIn: true, items:items, user:req.session.user});
 		} else {
 			res.render('pages/landing', {loggedIn: false, items:items})

@@ -31,14 +31,15 @@
   
     myNewTaskForm.submit(function (event) {
         event.preventDefault();
-        console.log("submission pressed")
+        // console.log("submission pressed")
+        // console.log(myNewTaskForm)
         var comment  = commentInput.val();
         var itemID   = itemIDInput.val()
         var username = usernameInput.val()
 
-        console.log(comment)
-        console.log(itemID)
-        console.log(username)
+        // console.log(comment)
+        // console.log(itemID)
+        // console.log(username)
         if (comment) {
             console.log("there is a comment")
             var requestConfig = {

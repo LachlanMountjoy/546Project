@@ -54,7 +54,7 @@ let exportedMethods = {
         return { deleted: true };
     },
 
-    async addCommentToItem(itemID, commentID){
+    async addCommentToItem(itemID, commentID, username, comment){
         const item = await this.getItem(itemID)
         console.log(item);
         (item.comments).push(commentID)
