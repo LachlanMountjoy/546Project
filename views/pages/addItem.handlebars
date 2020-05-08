@@ -9,7 +9,7 @@
           <label for="inputImage">
             <input type="file" class="custom-file-input" name="inputImage" id="inputImage" style="display:none;" />
             <div id="thumbnailDiv">
-              <img class="img-thumbnail hover-image" width="100%" height="250"
+              <img class="img-thumbnail hover-image" width="100%" height="250" alt="image"
                 src="https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png">
               <div class="hover-middle hover-text">
                 Click here to upload an image
@@ -67,12 +67,12 @@
         <label for="inputCategories">Categories</label>
         <small class="form-text text-muted">&nbsp;&nbsp;&nbsp;&nbsp;Add all relevant categories below, separated by
           commas</small>
-        <input type="text" class="form-control wrapper" name="inputCategories" id="inputCategories" placeholder="Categories">
+        <input type="text" class="form-control wrapper" name="inputCategories" id="inputCategories" placeholder="Categories" required>
       </div>
 
       <div class="form-row mb-3">
         <label for="inputDescriptions">Descriptions</label>
-        <textarea class="form-control" name="inputDescriptions" id="inputDescriptions" rows="3"></textarea>
+        <textarea class="form-control" name="inputDescriptions" id="inputDescriptions" rows="3" required></textarea>
       </div>
 
       <button type="submit" class="btn btn-primary">Submit</button>

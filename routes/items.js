@@ -4,6 +4,7 @@ const data = require("../data");
 const itemData = data.items;
 const userData = data.users;
 const bidderData = data.bidders;
+const commentData = data.comments
 const fs = require("fs");
 const multer = require("multer");
 
@@ -55,14 +56,11 @@ router.post("/", async (req, res) => {
 
 })
 
-// router.post("/buy", async (req, res) => {
-// try{
-
-// }
-// })
-
-
 router.get("/item/:id", async (req, res) => {
+  if(!req.session.user){
+    res.render('pages/login', {loggedIn: false})
+    return
+  }
   try {
     const item = await itemData.getItem(req.params.id);
     const bidderList = await bidderData.getBidderByItem(req.params.id);
@@ -99,12 +97,21 @@ router.get("/item/:id", async (req, res) => {
         }
     }
 
-    //console.log(item);
+    console.log("item comments are " + item.comments);
+    listOfComments = []
+    for (var i = 0; i < (item.comments).length; i++) {
+      console.log(item.comments[i])
+      comment = await commentData.getCommentById(item.comments[i])
+      console.log(comment)
+      listOfComments.push(comment)
+    }
+    console.log("currnet user = " + req.session.user.username)
+
     res.render("pages/item", {
       itemId: item._id,
       itemName: item.itemName,
       price: item.price,
-      userId: item.userId,
+      userID: item.userId,
       categories: item.categories,
       description: item.description,
       image: '/' + item.image,
@@ -117,11 +124,13 @@ router.get("/item/:id", async (req, res) => {
       currentBidder: currentBidder,
       status: item.status,
       role: role,
-      loggedIn:loggedIn
+      loggedIn:loggedIn,
 
+      listOfComments: listOfComments,
+      currUser: req.session.user.usename
     });
   } catch (e) {
-    res.status(404).json({ error: "item not found" });
+    res.status(404).json({ error: e });
   }
 });
 

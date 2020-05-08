@@ -54,7 +54,31 @@ let exportedMethods = {
         return { deleted: true };
     },
 
+    async addCommentToItem(itemID, commentID, username, comment){
+        const item = await this.getItem(itemID)
+        console.log(item);
+        (item.comments).push(commentID)
+        const itemUpdateInfo = {
+          comments: item.comments
+        };
+        console.log(item.comments)
+        const itemCollection = await items();
+
+        console.log("updating item with id " + itemID)
+        console.log("with comment " + commentID)
+        const updateInfo = await itemCollection.updateOne(
+            {_id: item._id},
+            { $set: itemUpdateInfo }
+        );
+        console.log(updateInfo)
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
+          throw 'Update failed';
+    
+        return await this.getItem(itemID);
+      },
+
     async addItem(sellType, auctionExpiration, itemName, categories, description, image, userId, price) {
+        console.log("in add item")
         if (!itemName) throw 'You should provide a name of your item';
         if (!categories || !Array.isArray(categories)) throw 'you should provide an array of categories';
         //if (categories.length <= 0) throw 'You must provide at least one category';
@@ -83,7 +107,8 @@ let exportedMethods = {
             image: image,
             postDate: time,
             status : 'selling',
-            buyer: ''
+            buyer: '',
+            comments: []
         };
     const insertInfo = await itemCollection.insertOne(newItem);
     if (insertInfo.insertedCount === 0) throw 'could not add new item';
