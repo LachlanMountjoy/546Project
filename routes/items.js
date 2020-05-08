@@ -45,8 +45,7 @@ router.post("/", async (req, res) => {
       deleted: true,
       data: item
     }
-    console.log(result);
-    res.redirect('/items');
+    res.redirect('/login/verifyUser');
   } catch (e) {
     console.log(e);
     res.status(500).json({ error: e });
@@ -70,7 +69,13 @@ router.get("/item/:id", async (req, res) => {
     var currentPrice = item.price;
     var currentBidder;
     var role;
+    var loggedIn;
     const bidderCount = bidderList.length;
+    if(req.session.user){
+			loggedIn=true;
+		} else {
+			loggedIn=false;
+		}
     for(i in bidderList) {
       if(currentPrice < bidderList[i].bidPrice) {
         currentPrice = bidderList[i].bidPrice;
@@ -111,7 +116,8 @@ router.get("/item/:id", async (req, res) => {
       bidderCount: bidderCount,
       currentBidder: currentBidder,
       status: item.status,
-      role: role
+      role: role,
+      loggedIn:loggedIn
 
     });
   } catch (e) {
@@ -122,6 +128,11 @@ router.get("/item/:id", async (req, res) => {
 router.get("/modifyItem/:id", async (req, res) => {
   try {
     const item = await itemData.getItem(req.params.id);
+    if(req.session.user){
+			loggedIn=true;
+		} else {
+			loggedIn=false;
+		}
     res.render("pages/modifyItem", {
       itemName: item.itemName,
       price: item.price,
@@ -130,7 +141,8 @@ router.get("/modifyItem/:id", async (req, res) => {
       image: '/' + item.image,
       categories: item.categories,
       description: item.description,
-      id: item._id
+      id: item._id,
+      loggedIn:loggedIn
     });
   } catch (e) {
     res.status(404).json({ error: "page not found" });
@@ -139,7 +151,12 @@ router.get("/modifyItem/:id", async (req, res) => {
 
 router.get("/addItem", async (req, res) => {
   try {
-    res.render('pages/addItem');
+    if(req.session.user){
+			loggedIn=true;
+		} else {
+			loggedIn=false;
+		}
+    res.render('pages/addItem',{loggedIn:loggedIn});
   } catch (e) {
     res.status(404).json({ error: "page not found" });
   }
@@ -148,6 +165,11 @@ router.get("/addItem", async (req, res) => {
 router.get("/modifyItem/item/:id", async (req, res) => {
   try {
     const item = await itemData.getItem(req.params.id);
+    if(req.session.user){
+			loggedIn=true;
+		} else {
+			loggedIn=false;
+		}
     res.render("pages/item", {
       itemName: item.itemName,
       price: item.price,
@@ -156,7 +178,8 @@ router.get("/modifyItem/item/:id", async (req, res) => {
       image: '/' + item.image,
       categories: item.categories,
       description: item.description,
-      id: item._id
+      id: item._id,
+      loggedIn:loggedIn
     });
   } catch (e) {
     res.status(404).json({ error: "page not found" });

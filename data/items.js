@@ -123,9 +123,17 @@ let exportedMethods = {
         if(!itemId) throw 'you should provide itemId';
         if(!buyer) throw 'you should provide a buyer';
         const itemCollection = await items();
+        const item = await this.getItem(itemId);
+        var status;
+        if(item.sellType == "sell") {
+            status = 'soldOut'
+        } else{
+            status = item.status;
+        }
+
         let updateInfo = {
             buyer: buyer,
-            status: "soldOut"
+            status: status
         };
         const updatedInfo = await itemCollection.updateOne({ _id: new ObjectId(itemId) }, { $set: updateInfo });
         if (updatedInfo.modifiedCount === 0) {
@@ -133,6 +141,25 @@ let exportedMethods = {
         }
 
 
+    },
+
+    async getAllBoughtItemsByUsername(username){
+        if(!username) throw 'you should provide a username to search for all bought items'
+        const itemCollection = await items();
+        const itemList = await itemCollection.find({ buyer: username }).toArray();
+        for(i in itemList) {
+            if(itemList[i].sellType == 'sell'){
+                break;
+            }else{
+                const today = new Date();
+                const time = today.getTime();
+                if(itemList[i].postDate.getTime() + parseInt(item.auctionExpiration)*24*60*60*1000 > time) {
+                    itemList.splice(i,1);
+                }else {
+                    break;
+                }
+            }
+        }
     }
 };
 
