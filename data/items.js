@@ -56,24 +56,24 @@ let exportedMethods = {
 
     async addCommentToItem(itemID, commentID, username, comment){
         const item = await this.getItem(itemID)
-        console.log(item);
+        //console.log(item);
         (item.comments).push(commentID)
         const itemUpdateInfo = {
           comments: item.comments
         };
-        console.log(item.comments)
+        //console.log(item.comments)
         const itemCollection = await items();
 
-        console.log("updating item with id " + itemID)
-        console.log("with comment " + commentID)
+        // console.log("updating item with id " + itemID)
+        // console.log("with comment " + commentID)
         const updateInfo = await itemCollection.updateOne(
             {_id: item._id},
             { $set: itemUpdateInfo }
         );
-        console.log(updateInfo)
+        //console.log(updateInfo)
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
           throw 'Update failed';
-    
+
         return await this.getItem(itemID);
       },
 

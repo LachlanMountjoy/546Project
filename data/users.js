@@ -23,18 +23,18 @@ let exportedMethods = {
     // console.log("in email db")
     const userCollection = await users();
     const user = await userCollection.findOne({email: email});
-    console.log("here")
+    //console.log("here")
     // if (!user) throw 'User not found';
     return user;
   },
 
-  
+
   async getUserbyUsername(username) {
-    console.log("in username db")
+    //console.log("in username db")
     const userCollection = await users();
     const user = await userCollection.findOne({username: username});
-    console.log("here i am");
-    console.log(user);
+    //console.log("here i am");
+    //console.log(user);
     // if (!user) throw 'User not found';
     return user;
   },
@@ -44,12 +44,12 @@ let exportedMethods = {
     const userCollection = await users();
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    console.log(firstName)
-    console.log(lastName)
-    console.log( email)
-    console.log(username)
-    console.log("pw in db = " + hashedPassword)
-    console.log("here")
+    // console.log(firstName)
+    // console.log(lastName)
+    // console.log( email)
+    // console.log(username)
+    // console.log("pw in db = " + hashedPassword)
+    // console.log("here")
 
 
     // console.log("pw in db = " + hashedPassword)
@@ -65,10 +65,10 @@ let exportedMethods = {
       itemsBidOn:[],
       boughtItems: [],
     };
-    console.log(newUser);
+    //console.log(newUser);
 
     const newInsertInformation = await userCollection.insertOne(newUser);
- 
+
     console.log(newInsertInformation);
     if (newInsertInformation.insertedCount === 0) throw 'Insert failed!';
     return await this.getUserById(newInsertInformation.insertedId);
@@ -85,7 +85,7 @@ let exportedMethods = {
 
   async updateUser(id, updatedUser) {
     const user = await this.getUserById(id);
-    console.log(user);
+    //console.log(user);
     const hashedPassword = bcrypt.hash(updatedUser.password, 10);
 
     let userUpdateInfo = {

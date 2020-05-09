@@ -7,13 +7,13 @@
       <h1 class="display-3">Hello {{user.firstName}}! </h1>
       <p>Information:</p>
       <ul>
-        <li> Username: {{user.username}} </li>      
-        <li> First Name: {{user.firstName}} </li>   
-        <li> Last Name: {{user.lastName}} </li>     
-        <li>  email: {{user.email}}</li>              
-        <li> Location: {{user.location}} </li>  
+        <li> Username: {{user.username}} </li>
+        <li> First Name: {{user.firstName}} </li>
+        <li> Last Name: {{user.lastName}} </li>
+        <li>  email: {{user.email}}</li>
+        <li> Location: {{user.location}} </li>
       </ul>
-    
+
     </div>
   </div>
 
@@ -26,7 +26,8 @@
     <div class="row">
       {{#each items1}}
       <div class="col-md-4">
-            <h3>{{itemName}}</h3>
+            <a href="/items/item/{{_id}}"><h3>{{itemName}}</h3></a>
+            {{!-- <h3>{{itemName}}</h3> --}}
             <div class="class1"><img src={{image}} alt="item" id="image1"></div>
             <div class= "class2">  <p>ID:{{_id}}</p>
             <p>SellType: {{sellType}} </p>
@@ -35,7 +36,7 @@
             <p>Date Posted: {{postDate}}</p>
             <p>Status: {{status}}</p>
             </div>
-          
+
       </div>
       {{/each}}
     </div>
@@ -57,7 +58,7 @@
             <p>Date Posted: {{postDate}}</p>
             <p>Status: {{status}}</p>
             </div>
-          
+
       </div>
       {{/each}}
     </div>

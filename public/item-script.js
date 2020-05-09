@@ -10,9 +10,9 @@ const buyLink = document.getElementById('buyLink');
 const modifyLink = document.getElementById('modifyLink');
 const deleteButton = document.getElementById('deleteButton');
 
-console.log(status);
-console.log(role);
-console.log(sellType);
+// console.log(status);
+// console.log(role);
+// console.log(sellType);
 
 if(status == 'selling') {
     if(role == "seller") {
@@ -34,10 +34,10 @@ if(status == 'selling') {
         }
     }
 }
-console.log(modifyLink.hidden);
-console.log(deleteButton.hidden);
-console.log(buyLink.hidden);
-console.log(bidLink.hidden);
+// console.log(modifyLink.hidden);
+// console.log(deleteButton.hidden);
+// console.log(buyLink.hidden);
+// console.log(bidLink.hidden);
 
 
 if(sellType == "sell") {

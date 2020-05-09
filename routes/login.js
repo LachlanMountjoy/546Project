@@ -17,19 +17,19 @@ router.post('/', async (req, res) =>  {
         res.render('pages/login', {loggedIn: false})
     } else {
         console.log("User already logged in, get user info and show their page");
-        console.log(req.session.user);
+        //console.log(req.session.user);
         try {
             let user = await userData.getUserbyUsername(req.session.username);
         } catch (error) {
             console.log(error)
         }
-        console.log(req.session.user.username);
+        //console.log(req.session.user.username);
         let user = await userData.getUserbyUsername(req.session.user.username);
-        console.log("user = " + user.itemsForSale);
+        //console.log("user = " + user.itemsForSale);
        let items1 = await itemData.getItemByUser(req.session.user.username);
-       console.log(items1);
+       //console.log(items1);
        let items2 = await itemData.getItemByBidder(req.session.user.username);
-       console.log(items2);
+       //console.log(items2);
         res.render('pages/user', {user: user, items1: items1, items2: items2, loggedIn: true});
     }
 });
@@ -46,7 +46,7 @@ router.post('/createUser', async (req, res) =>  {
     } else {
         console.log("creating a new user")
         const { createUsername, createEmail, createPassword, createLN, createFN, createLocation } = req.body
-        console.log(req.body)
+        //console.log(req.body)
 
         if(!createUsername | !createEmail | !createPassword | !createLN | !createFN | !createLocation){
             console.log("Missing field info")
@@ -67,7 +67,7 @@ router.post('/createUser', async (req, res) =>  {
 
         //In the future, these two checks can be done client side
         //Username already in db
-        
+
         let user = await userData.getUserbyUsername(cleanUsername);
         let user2 = await userData.getUserbyEmail(cleanEmail);
         console.log("got user and user 2 from db")
@@ -90,7 +90,7 @@ router.post('/createUser', async (req, res) =>  {
         //Creating a new user
         try {
             console.log("adding user to db")
-           
+
             await userData.addUser(createFN, createLN, cleanEmail, createLocation, createPassword, cleanUsername)
         } catch (error) {
             // console.log(error)
@@ -98,9 +98,9 @@ router.post('/createUser', async (req, res) =>  {
         }
 
         //Setting session
-        req.session.user = { 
-            firstName: createFN, 
-            lastName: createLN, 
+        req.session.user = {
+            firstName: createFN,
+            lastName: createLN,
             username: cleanUsername,
             email: cleanEmail,
             location: createLocation,
@@ -131,25 +131,25 @@ router.post('/verifyUser', async (req, res) => {
         if(user == null){
             res.render('pages/login', {loggedIn: false, error: "No account with that username"})
         }
-        console.log("creating match var")
-        console.log("pass = " + user.password)
+       // console.log("creating match var")
+        //console.log("pass = " + user.password)
         match = await bcrypt.compare(password, user.password);
 
         //Username and password are valid
         if(match) {
             console.log("passwords match")
-            req.session.user = { 
-                firstName: user.firstName, 
-                lastName: user.lastName, 
+            req.session.user = {
+                firstName: user.firstName,
+                lastName: user.lastName,
                 username: user.username,
                 email: user.email,
                 location: user.location
             };
             // console.log("user is " + user)
            let items1 = await itemData.getItemByUser(req.session.user.username);
-           console.log(items1);
+           //console.log(items1);
            let items2 = await itemData.getItemByBidder(req.session.user.username);
-           console.log(items2);
+           //console.log(items2);
             res.render('pages/user', {user: user, items1: items1, items2: items2, loggedIn: true});
         } else {
             // console.log("passwords dont watch")
@@ -161,4 +161,4 @@ router.post('/verifyUser', async (req, res) => {
     }
 })
 
-module.exports = router; 
+module.exports = router;

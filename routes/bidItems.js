@@ -15,7 +15,10 @@ router.get("/", async (req, res) => {
 
 router.post("/item", async (req, res) => {
   try {
-    const bidPrice = Number(req.body['bidOnPrice']);
+
+    const bidPriceStr = req.body['bidOnPrice'];
+    let bidPriceNum = bidPriceStr.replace(/,/g,"");
+    const bidPrice = Number(bidPriceNum);
     const itemId = req.body['itemId'];
     //const userId = req.session.user;
     const userId = req.session.user.username;   // test data need to add userId
@@ -50,10 +53,14 @@ router.get("/item/:id", async (req, res) => {
         currentBidder = bidderList[i].userId;
       }
    }
+   const price = item.price;
+   priceFormat = Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }).format(price);
+   bidPriceFormat = Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }).format(currentPrice);
+
     res.render("pages/bidItem", {
       itemId: item._id,
       itemName: item.itemName,
-      price: item.price,
+      price: priceFormat,
       userId: item.userId,
       categories: item.categories,
       description: item.description,
@@ -62,7 +69,7 @@ router.get("/item/:id", async (req, res) => {
       postDate: item.postDate,
       sellType: item.sellType,
       auctionExpiration: item.auctionExpiration,
-      currentPrice: currentPrice
+      currentPrice: bidPriceFormat
     });
   } catch (e) {
     res.status(404).json({ error: e + "page not found" });

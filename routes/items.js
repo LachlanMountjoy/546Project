@@ -80,6 +80,8 @@ router.get("/item/:id", async (req, res) => {
         currentBidder = bidderList[i].userId;
       }
    }
+   bidPriceFormat = Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }).format(currentPrice);
+
    if(req.session.user.username == item.userId) {
         role = 'seller';
    }else{
@@ -100,17 +102,20 @@ router.get("/item/:id", async (req, res) => {
     console.log("item comments are " + item.comments);
     listOfComments = []
     for (var i = 0; i < (item.comments).length; i++) {
-      console.log(item.comments[i])
+      //console.log(item.comments[i])
       comment = await commentData.getCommentById(item.comments[i])
-      console.log(comment)
+      //console.log(comment)
       listOfComments.push(comment)
     }
     console.log("currnet user = " + req.session.user.username)
+    const price = item.price;
+    priceFormat = Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }).format(price);
+
 
     res.render("pages/item", {
       itemId: item._id,
       itemName: item.itemName,
-      price: item.price,
+      price: priceFormat,
       userID: item.userId,
       categories: item.categories,
       description: item.description,
@@ -119,7 +124,7 @@ router.get("/item/:id", async (req, res) => {
       postDate: item.postDate,
       sellType: item.sellType,
       auctionExpiration: item.auctionExpiration,
-      currentPrice : currentPrice,
+      currentPrice : bidPriceFormat,
       bidderCount: bidderCount,
       currentBidder: currentBidder,
       status: item.status,
@@ -141,10 +146,13 @@ router.get("/modifyItem/:id", async (req, res) => {
 			loggedIn=true;
 		} else {
 			loggedIn=false;
-		}
+    }
+    const price = item.price;
+    priceFormat = Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }).format(price);
+
     res.render("pages/modifyItem", {
       itemName: item.itemName,
-      price: item.price,
+      price: priceFormat,
       userId: item.userId,
       description: item.description,
       image: '/' + item.image,
@@ -178,10 +186,13 @@ router.get("/modifyItem/item/:id", async (req, res) => {
 			loggedIn=true;
 		} else {
 			loggedIn=false;
-		}
+    }
+    const price = item.price;
+    priceFormat = Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }).format(price);
+
     res.render("pages/item", {
       itemName: item.itemName,
-      price: item.price,
+      price: priceFormat,
       userId: item.userId,
       description: item.description,
       image: '/' + item.image,
@@ -198,7 +209,7 @@ router.get("/modifyItem/item/:id", async (req, res) => {
 var upload = multer({ dest: 'public/images/' });
 
 router.post("/modifyItem/item", upload.single('inputImage'), async (req, res) => {
-  console.log("sdss");
+
 
   try {
     const id = req.body['itemId'];
@@ -212,7 +223,9 @@ router.post("/modifyItem/item", upload.single('inputImage'), async (req, res) =>
 
     const itemName = req.body['modifyName'];
 
-    const price = Number(req.body['modifyPrice']);
+    const priceStr = req.body['modifyPrice'];
+    let priceNum = priceStr.replace(/,/g,"");
+    const price = Number(priceNum);
 
     //const imageFile = req.body['inputImage'];
 
@@ -253,7 +266,10 @@ router.post("/item", upload.single('inputImage'), async (req, res) => {
 
     const itemName = req.body['inputName'];
 
-    const price = Number(req.body['inputPrice']);
+    const priceStr = req.body['inputPrice'];
+    let priceNum = priceStr.replace(/,/g,"");
+    const price = Number(priceNum);
+
 
     // const imageFile = req.body['inputImage'];
     // const image = req.file.path;

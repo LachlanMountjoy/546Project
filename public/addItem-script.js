@@ -69,6 +69,8 @@ itemForm.addEventListener('submit', (event) => {
   const name = document.getElementById('inputName').value;
 
   const price = Number(document.getElementById('inputPrice').value);
+  console.log('price'+price)
+  console,log(typeof price)
 
   const image = document.getElementById('inputImage').files[0];
 
