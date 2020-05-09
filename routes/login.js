@@ -37,14 +37,9 @@ router.post('/', async (req, res) =>  {
 
 router.post('/createUser', async (req, res) =>  {
     //If a user is logged in, send them back to the main page, this will eventually redirect them to the /pages/user
-
-    console.log("in createuser")
-
     if(req.session.user){
-        console.log("user is logged in")
         res.render('pages/login', {loggedIn: true})
     } else {
-        console.log("creating a new user")
         const { createUsername, createEmail, createPassword, createLN, createFN, createLocation } = req.body
         //console.log(req.body)
 
@@ -58,7 +53,14 @@ router.post('/createUser', async (req, res) =>  {
         let cleanPassword = createPassword;
         let cleanEmail = createEmail;
 
-        // console.log("clean username = " + cleanUsername)
+        console.log("clean username = " + cleanUsername)
+        console.log("input username = " + createUsername)
+
+        if(cleanUsername != createUsername){
+            console.log("user passed invalid charcters for the UN")
+            res.render('pages/login', {loggedIn: false, error: "Error: Username can only contain the characters [^0-9a-zA-Z_]"})
+            return
+        }
         // console.log("clean password = " + cleanPassword)
         // console.log("clean email = " + cleanEmail)
         // console.log(createLN)
@@ -83,7 +85,7 @@ router.post('/createUser', async (req, res) =>  {
         //Email or username already in DB
         if(user || user2){
             console.log("username or email already in db")
-            res.render('pages/login', {loggedIn: false})
+            res.render('pages/login', {error: "Error: Username or email already taken", loggedIn: false})
             return
         }
 
@@ -130,6 +132,8 @@ router.post('/verifyUser', async (req, res) => {
     try {
         if(user == null){
             res.render('pages/login', {loggedIn: false, error: "No account with that username"})
+            //added this return
+            return
         }
        // console.log("creating match var")
         //console.log("pass = " + user.password)
