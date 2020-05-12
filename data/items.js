@@ -21,7 +21,7 @@ let exportedMethods = {
     async getItemByUser(userId) {
         if (!userId) throw 'you must provide an item id to search for ';
         const itemCollection = await items();
-        const itemList = await itemCollection.find({ userId: userId }).toArray();
+        const itemList = await itemCollection.find({ userId: userId,  status: 'selling' }).toArray();
         if (itemList === null) throw 'no item with the userId ';
         return itemList;
     },
@@ -39,7 +39,21 @@ let exportedMethods = {
     async getItemByBidder(userId) {
         if (!userId) throw 'you must provide an item id to search for ';
         const itemCollection = await items();
-        const itemList = await itemCollection.find({ bidders: userId }).toArray();
+        const itemList = await itemCollection.find({ buyer: userId, sellType: 'auction'}).toArray();
+        if (itemList === null) throw 'no item with the userId ';
+        return itemList;
+    },
+    async getItemByBought(userId) {
+        if (!userId) throw 'you must provide an item id to search for ';
+        const itemCollection = await items();
+        const itemList = await itemCollection.find({ buyer: userId, sellType: 'sell'}).toArray();
+        if (itemList === null) throw 'no item with the userId ';
+        return itemList;
+    },
+    async getItemSold(userId) {
+        if (!userId) throw 'you must provide an item id to search for ';
+        const itemCollection = await items();
+        const itemList = await itemCollection.find({userId: userId, status:'soldOut'}).toArray();
         if (itemList === null) throw 'no item with the userId ';
         return itemList;
     },
@@ -55,7 +69,13 @@ let exportedMethods = {
     },
 
     async addCommentToItem(itemID, commentID, username, comment){
-        const item = await this.getItem(itemID)
+       let item;
+        try{
+        item = await this.getItem(itemID)
+        }catch{
+            //do nothing
+            
+        }
         //console.log(item);
         (item.comments).push(commentID)
         const itemUpdateInfo = {
@@ -64,8 +84,8 @@ let exportedMethods = {
         //console.log(item.comments)
         const itemCollection = await items();
 
-        // console.log("updating item with id " + itemID)
-        // console.log("with comment " + commentID)
+         //console.log("updating item with id " + itemID)
+         //console.log("with comment " + commentID)
         const updateInfo = await itemCollection.updateOne(
             {_id: item._id},
             { $set: itemUpdateInfo }
