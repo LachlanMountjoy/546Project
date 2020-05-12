@@ -29,8 +29,10 @@ router.post('/', async (req, res) =>  {
        let items1 = await itemData.getItemByUser(req.session.user.username);
        //console.log(items1);
        let items2 = await itemData.getItemByBidder(req.session.user.username);
+       let items3 = await itemData.getItemByBought(req.session.user.username);
+       let items4 = await itemData.getItemSold(req.session.user.username);
        //console.log(items2);
-        res.render('pages/user', {user: user, items1: items1, items2: items2, loggedIn: true});
+        res.render('pages/user', {user: user, items1: items1, items2: items2,  items3: items3, items4: items4, loggedIn: true});
     }
 });
 
@@ -154,7 +156,11 @@ router.post('/verifyUser', async (req, res) => {
            //console.log(items1);
            let items2 = await itemData.getItemByBidder(req.session.user.username);
            //console.log(items2);
-            res.render('pages/user', {user: user, items1: items1, items2: items2, loggedIn: true});
+           let items3 = await itemData.getItemByBought(req.session.user.username);
+           let items4 = await itemData.getItemSold(req.session.user.username);
+           console.log("selling this itemsssssssssssssssss");
+           console.log(items4);
+            res.render('pages/user', {user: user, items1: items1, items2: items2, items3: items3, items4: items4, loggedIn: true});
         } else {
             // console.log("passwords dont watch")
             res.render('pages/login', {loggedIn: false, error: "Username and password don't match"})
