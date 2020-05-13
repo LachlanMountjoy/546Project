@@ -48,7 +48,7 @@ router.post('/createUser', async (req, res) =>  {
 
         let cleanUsername = createUsername.replace(/\W/g, '');
         let cleanPassword = createPassword;
-        let cleanEmail = createEmail;
+        let cleanEmail = createEmail.toLowerCase();
 
         if(cleanUsername != createUsername){
             res.render('pages/login', {loggedIn: false, error: "Error: Username can only contain the characters [^0-9a-zA-Z_]"})
