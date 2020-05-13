@@ -1,163 +1,174 @@
-
-
-
-  <!-- Main jumbotron for a primary marketing message or call to action -->
-  <div class="jumbotron">
-    <div class="container">
-      <h1 class="display-3">Hello {{user.firstName}}! </h1>
-      <p>Information:</p>
-      <ul>
-        <li> Username: {{user.username}} </li>
-        <li> First Name: {{user.firstName}} </li>
-        <li> Last Name: {{user.lastName}} </li>
-        <li>  email: {{user.email}}</li>
-        <li> Location: {{user.location}} </li>
-      </ul>
-
-    </div>
-  </div>
-
-    <div class="container">
-    <!-- Example row of columns -->
-    <h1>Items you're selling</h1>
-    <a href="/items/addItem"> Create a new listing </a>
-    <br>
-    <br>
-    {{#if items1}}
-
-    <div class="row">
-      {{#each items1}}
-      <div class="col-md-4">
-            <a href="/items/item/{{_id}}"><h3>{{itemName}}</h3></a>
-            {{!-- <h3>{{itemName}}</h3> --}}
-            <div class="class1"><img src={{image}} alt="item" id="image1"></div>
-            <div class= "class2">  <p>ID:{{_id}}</p>
-            <p>SellType: {{sellType}} </p>
-            <p>Price: ${{price}} </p>
-            <p>{{description}}</p>
-            <p>Date Posted: {{postDate}}</p>
-            <p>Status: {{status}}</p>
-            </div>
-
-      </div>
-      {{/each}}
-    </div>
-    {{else}}
-    <p>You have nothing for sale currently!</p>
-    {{/if}}
-    <br>
-    <br>
-    <br>
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
   <div class="container">
-       <h1>Items you are bidding on currently</h1>
-    {{#if items5}}
-    <div class="row">
-         {{#each items5}}
-      <div class="col-md-4">
-            <a href="/items/item/{{_id}}"><h3>{{itemName}}</h3></a>
-            <div class="class1"><img src={{image}} alt="item" id="image1"></div>
-            <div class= "class2">  <p>ID:{{_id}}</p>
-            <p>SellType: {{sellType}} </p>
-            <p>Price: ${{price}} </p>
-            <p>{{description}}</p>
-            <p>Date Posted: {{postDate}}</p>
-            <p>Status: {{status}}</p>
-            </div>
+    <h1 class="display-3">Hello {{user.firstName}}! </h1>
+    <p>Information:</p>
+    <ul>
+      <li> Username: {{user.username}} </li>
+      <li> First Name: {{user.firstName}} </li>
+      <li> Last Name: {{user.lastName}} </li>
+      <li> email: {{user.email}}</li>
+      <li> Location: {{user.location}} </li>
+    </ul>
+
+  </div>
+</div>
+
+<div class="container">
+  <!-- Example row of columns -->
+  <h1>Items you're selling</h1>
+  <a href="/items/addItem"> Create a new listing </a>
+  <br>
+  <br>
+  {{#if items1}}
+
+  <div class="row">
+    {{#each items1}}
+    <div class="col-md-4">
+      <a href="/items/item/{{_id}}">
+        <h2>{{itemName}}</h2>
+      </a>
+      {{!-- <h3>{{itemName}}</h3> --}}
+      <div class="class1"><img src={{image}} alt="item"></div>
+      <div class="class2">
+        <p>ID:{{_id}}</p>
+        <p>SellType: {{sellType}} </p>
+        <p>Price: ${{price}} </p>
+        <p>{{description}}</p>
+        <p>Date Posted: {{postDate}}</p>
+        <p>Status: {{status}}</p>
       </div>
-      {{/each}}
-    </div>
-    {{else}}
-    <p>You are not bidding on items currently!</p>
-    {{/if}}
-        <br>
-        <br>
-        <br>
 
-    {{!-- <h1>Items you have bought</h1> --}}
-    <br>
-    <br>
-    <!-- Example row of columns -->
-    <h1>Items you've bid on</h1>
-    {{#if items2}}
-    <div class="row">
-         {{#each items2}}
-      <div class="col-md-4">
-            <a href="/items/item/{{_id}}"><h3>{{itemName}}</h3></a>
-            <div class="class1"><img src={{image}} alt="item" id="image1"></div>
-            <div class= "class2">  <p>ID:{{_id}}</p>
-            <p>SellType: {{sellType}} </p>
-            <p>Price: ${{price}} </p>
-            <p>{{description}}</p>
-            <p>Date Posted: {{postDate}}</p>
-            <p>Status: {{status}}</p>
-            </div>
+    </div>
+    {{/each}}
+  </div>
+  {{else}}
+  <p>You have nothing for sale currently!</p>
+  {{/if}}
+  <br>
+  <br>
+  <br>
+</div>
+<div class="container">
+  <h1>Items you are bidding on currently</h1>
+  {{#if items5}}
+  <div class="row">
+    {{#each items5}}
+    <div class="col-md-4">
+      <a href="/items/item/{{_id}}">
+        <h2>{{itemName}}</h2>
+      </a>
+      <div class="class1"><img src={{image}} alt="item"></div>
+      <div class="class2">
+        <p>ID:{{_id}}</p>
+        <p>SellType: {{sellType}} </p>
+        <p>Price: ${{price}} </p>
+        <p>{{description}}</p>
+        <p>Date Posted: {{postDate}}</p>
+        <p>Status: {{status}}</p>
       </div>
-      {{/each}}
     </div>
-    {{else}}
-    <p>You have not bid on items successfully!</p>
-    {{/if}}
-        <br>
-        <br>
-        <br>
+    {{/each}}
+  </div>
+  {{else}}
+  <p>You are not bidding on items currently!</p>
+  {{/if}}
+  <br>
+  <br>
+  <br>
 
-    <h1>Items you have bought</h1>
-    <br>
-    <br>
-    {{#if items3}}
-    <div class="row">
-      {{#each items3}}
-      <div class="col-md-4">
-            <a href="/items/item/{{_id}}"><h3>{{itemName}}</h3></a>
-            {{!-- <h3>{{itemName}}</h3> --}}
-            <div class="class1"><img src={{image}} alt="item" id="image1"></div>
-            <div class= "class2">  <p>ID:{{_id}}</p>
-            <p>SellType: {{sellType}} </p>
-            <p>Price: ${{price}} </p>
-            <p>{{description}}</p>
-            <p>Date Posted: {{postDate}}</p>
-            <p>Status: {{status}}</p>
-            </div>
-
+  {{!-- <h1>Items you have bought</h1> --}}
+  <br>
+  <br>
+  <!-- Example row of columns -->
+  <h1>Items you've bid on</h1>
+  {{#if items2}}
+  <div class="row">
+    {{#each items2}}
+    <div class="col-md-4">
+      <a href="/items/item/{{_id}}">
+        <h2>{{itemName}}</h2>
+      </a>
+      <div class="class1"><img src={{image}} alt="item"></div>
+      <div class="class2">
+        <p>ID:{{_id}}</p>
+        <p>SellType: {{sellType}} </p>
+        <p>Price: ${{price}} </p>
+        <p>{{description}}</p>
+        <p>Date Posted: {{postDate}}</p>
+        <p>Status: {{status}}</p>
       </div>
-      {{/each}}
     </div>
-    {{else}}
-    <p>You have not bought anything!</p>
-    {{/if}}
-     <br>
-        <br>
-        <br>
-        <h1>Items you have sold</h1>
-    <br>
-    <br>
-    {{#if items4}}
-    <div class="row">
-      {{#each items4}}
-      <div class="col-md-4">
-            <a href="/items/item/{{_id}}"><h3>{{itemName}}</h3></a>
-            {{!-- <h3>{{itemName}}</h3> --}}
-            <div class="class1"><img src={{image}} alt="item" id="image1"></div>
-            <div class= "class2">  <p>ID:{{_id}}</p>
-            <p>SellType: {{sellType}} </p>
-            <p>Price: ${{price}} </p>
-            <p>{{description}}</p>
-            <p>Date Posted: {{postDate}}</p>
-            <p>Status: {{status}}</p>
-            </div>
+    {{/each}}
+  </div>
+  {{else}}
+  <p>You have not bid on items successfully!</p>
+  {{/if}}
+  <br>
+  <br>
+  <br>
 
+  <h1>Items you have bought</h1>
+  <br>
+  <br>
+  {{#if items3}}
+  <div class="row">
+    {{#each items3}}
+    <div class="col-md-4">
+      <a href="/items/item/{{_id}}">
+        <h2>{{itemName}}</h2>
+      </a>
+      {{!-- <h3>{{itemName}}</h3> --}}
+      <div class="class1"><img src={{image}} alt="item"></div>
+      <div class="class2">
+        <p>ID:{{_id}}</p>
+        <p>SellType: {{sellType}} </p>
+        <p>Price: ${{price}} </p>
+        <p>{{description}}</p>
+        <p>Date Posted: {{postDate}}</p>
+        <p>Status: {{status}}</p>
       </div>
-      {{/each}}
+
     </div>
-    {{else}}
-    <p>You have not sold anything yet!</p>
-    {{/if}}
-     <br>
-        <br>
-        <br>
+    {{/each}}
+  </div>
+  {{else}}
+  <p>You have not bought anything!</p>
+  {{/if}}
+  <br>
+  <br>
+  <br>
+  <h1>Items you have sold</h1>
+  <br>
+  <br>
+  {{#if items4}}
+  <div class="row">
+    {{#each items4}}
+    <div class="col-md-4">
+      <a href="/items/item/{{_id}}">
+        <h2>{{itemName}}</h2>
+      </a>
+      {{!-- <h3>{{itemName}}</h3> --}}
+      <div class="class1"><img src={{image}} alt="item"></div>
+      <div class="class2">
+        <p>ID:{{_id}}</p>
+        <p>SellType: {{sellType}} </p>
+        <p>Price: ${{price}} </p>
+        <p>{{description}}</p>
+        <p>Date Posted: {{postDate}}</p>
+        <p>Status: {{status}}</p>
+      </div>
+
+    </div>
+    {{/each}}
+  </div>
+  {{else}}
+  <p>You have not sold anything yet!</p>
+  {{/if}}
+  <br>
+  <br>
+  <br>
 
 
- <hr>
-  </div> <!-- /container -->
-
-
+  <hr>
+</div> <!-- /container -->

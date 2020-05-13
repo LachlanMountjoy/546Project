@@ -2,7 +2,7 @@ const itemDeleteForm = document.getElementById('itemDeleteForm');
 const bidItemDiv = document.getElementById('bidItemDiv');
 const bidPriceDiv = document.getElementById('bidPriceDiv');
 const sellType = document.getElementById('sellType').value;
-const status = document.getElementById('statusDiv').getAttribute("value");
+const status = document.getElementById('statusDiv').value;
 const role = document.getElementById('role').value;
 
 const bidLink = document.getElementById('bidLink');

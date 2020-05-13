@@ -14,7 +14,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <h2 class="navbar-brand"> Group 7's Bidding Project </h2>
+        <h1 class="navbar-brand"> Group 7's Bidding Project </h1>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -27,13 +27,13 @@
                     <button type="submit"> My Account </button>
                 </form>
             </li>
-            <li>        
+            <li>
                 <form method="POST" action="/" id="home_button">
                     <button type="submit"> Home </button>
                 </form>
             </li>
             {{#if loggedIn}}
-            <li>        
+            <li>
                 <form method="POST" action="/logout" id="logout_button">
                     <button type="submit"> Logout </button>
                 </form>

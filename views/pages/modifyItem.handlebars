@@ -10,7 +10,7 @@
           <label for="inputImage">
             <input type="file" class="custom-file-input" name="inputImage" id="inputImage" style="display:none;" />
             <div id="thumbnailDiv">
-              <img class="img-thumbnail hover-image" width="100%" height="250" alt="image"
+              <img class="img-thumbnail hover-image" alt="image"
                 src={{image}}>
               <div class="hover-middle hover-text">
                 Click here to upload an image
@@ -27,7 +27,7 @@
         <div class="col-md-8">
 
           <div class="form-group">
-            <label for="Name">Name</label>
+            <label for="modifyName">Name</label>
             <input type="text" class="form-control" name="modifyName" id="modifyName" value="{{itemName}}" placeholder="Name" required>
           </div>
 
@@ -73,10 +73,10 @@
 
       <div class="form-row mb-3">
         <label for="modifyDescriptions">Descriptions</label>
-        <textarea class="form-control" name="modifyDescriptions" id="modifyDescriptions" rows="3" value="{{description}}">{{description}}</textarea>
+        <textarea class="form-control" name="modifyDescriptions" id="modifyDescriptions" rows="3" placeholder="Description">{{description}}</textarea>
       </div>
 
-      <a type="button" class="btn btn-secondary" href="/items/item/{{id}}">Cancel</a>
+      <a class="btn btn-secondary" href="/items/item/{{id}}">Cancel</a>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 

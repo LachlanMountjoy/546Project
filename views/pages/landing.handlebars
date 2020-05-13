@@ -4,6 +4,9 @@
         <div class="container">
             <h1 class="display-2"> For Sale </h1>
             <form method="POST" class="search" action='/search/'>
+                <label for="search">
+                 search
+                </label>
                 <input type="text" name="search" id= "search" placeholder="Search..">
                 <button type="submit">Go!</button>
             </form>
@@ -16,18 +19,18 @@
         {{!-- {{#if buyer}} --}}
             {{!-- {{else }} --}}
             <div class="col-md-4">
-                <h3><a href="/items/item/{{_id}}"> {{itemName}} </a></h3>
+                <h2><a href="/items/item/{{_id}}"> {{itemName}} </a></h2>
                 <p>Sold by: {{userId}}</p>
                 {{_id}}
                 {{#if image}}
                     <img src={{image}} alt="item" class="image1">
                 {{/if}}
                 <p>{{description}} <br>
-                    Min bid of {{price}} 
-                        {{#if highestBidder}} 
-                            by {{highestBidder}} 
+                    Min bid of {{price}}
+                        {{#if highestBidder}}
+                            by {{highestBidder}}
                         {{/if}} <br>
-                    Posted at {{postDate}}    
+                    Posted at {{postDate}}
                 </p>
             </div>
         {{!-- {{/if}} --}}

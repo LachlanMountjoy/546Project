@@ -1,5 +1,5 @@
 const bidOnPrice = document.getElementById('bidOnPrice');
-const currentPrice = document.getElementById('currentPrice').getAttribute("value")
+const currentPrice = document.getElementById('currentPrice').value;
 console.log(currentPrice);
 
 bidOnPrice.addEventListener('change', (event) => {
