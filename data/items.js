@@ -90,7 +90,6 @@ let exportedMethods = {
         if (!id) throw 'you must provide an id to search for';
         const itemCollection = await items();
         const deletionInfo = await itemCollection.deleteOne({ _id: new ObjectId(id) });
-        //await itemCollection.deleteMany({author: id});
         if (deletionInfo.deletedCount === 0) {
             throw `Could not delete item with id of ${id}`;
         }
@@ -98,28 +97,23 @@ let exportedMethods = {
     },
 
     async addCommentToItem(itemID, commentID, username, comment){
-       let item;
+        let item;
         try{
-        item = await this.getItem(itemID)
-        }catch{
+            item = await this.getItem(itemID)
+        }catch (e) {
             //do nothing
 
         }
-        //console.log(item);
         (item.comments).push(commentID)
         const itemUpdateInfo = {
           comments: item.comments
         };
-        //console.log(item.comments)
         const itemCollection = await items();
 
-         //console.log("updating item with id " + itemID)
-         //console.log("with comment " + commentID)
         const updateInfo = await itemCollection.updateOne(
             {_id: item._id},
             { $set: itemUpdateInfo }
         );
-        //console.log(updateInfo)
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount)
           throw 'Update failed';
 

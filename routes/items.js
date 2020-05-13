@@ -7,6 +7,8 @@ const bidderData = data.bidders;
 const commentData = data.comments
 const fs = require("fs");
 const multer = require("multer");
+const xss = require('xss');
+
 
 router.get("/buyItem/:id", async (req, res) => {
     try{
@@ -103,9 +105,7 @@ router.get("/item/:id", async (req, res) => {
     console.log("item comments are " + item.comments);
     listOfComments = []
     for (var i = 0; i < (item.comments).length; i++) {
-      //console.log(item.comments[i])
       comment = await commentData.getCommentById(item.comments[i])
-      //console.log(comment)
       listOfComments.push(comment)
     }
     console.log("currnet user = " + req.session.user.username)
@@ -222,25 +222,18 @@ router.get("/modifyItem/item/:id", async (req, res) => {
 var upload = multer({ dest: 'public/images/' });
 
 router.post("/modifyItem/item", upload.single('inputImage'), async (req, res) => {
-
-
   try {
-    const id = req.body['itemId'];
+    const id = xss(req.body['itemId']);
     const oldItem = await itemData.getItem(id);
-    const sellType = req.body['modifySellType'];
+    const sellType = xss(req.body['modifySellType']);
 
-    // let auctionExpiration = null;
-    // if (sellType == 'auction') {
-    const auctionExpiration = req.body['modifyAuctionExpiration'];
-    // }
+    const auctionExpiration = xss(req.body['modifyAuctionExpiration']);
 
-    const itemName = req.body['modifyName'];
+    const itemName = xss(req.body['modifyName']);
 
-    const priceStr = req.body['modifyPrice'];
+    const priceStr = xss(req.body['modifyPrice']);
     let priceNum = priceStr.replace(/,/g,"");
     const price = Number(priceNum);
-
-    //const imageFile = req.body['inputImage'];
 
     let image = oldItem.image;
     if (req.file) {
@@ -250,16 +243,12 @@ router.post("/modifyItem/item", upload.single('inputImage'), async (req, res) =>
     const inputCategories = req.body['modifyCategories'];
     const categories = inputCategories.split(',').map(x => x.trim());
 
-    const description = req.body['modifyDescriptions'];
+    const description = xss(req.body['modifyDescriptions']);
 
 
     const item = await itemData.updateItem(id, sellType, auctionExpiration, itemName, categories, description, image, price);
 
-
-    //console.log(sellType, auctionExpiration, name, price, image, categories, descriptions);
-
     res.redirect(`/items/item/${item._id}`);
-    //res.redirect(`pages/item`);
 
   } catch (e) {
     console.log(e);
@@ -268,24 +257,16 @@ router.post("/modifyItem/item", upload.single('inputImage'), async (req, res) =>
 });
 
 router.post("/item", upload.single('inputImage'), async (req, res) => {
-
   try {
-    const sellType = req.body['inputSellType'];
+    const sellType = xss(req.body['inputSellType']);
 
-    // let auctionExpiration = null;
-    // if (sellType == 'auction') {
-    const auctionExpiration = req.body['inputAuctionExpiration'];
-    // }
+    const auctionExpiration = xss(req.body['inputAuctionExpiration']);
 
-    const itemName = req.body['inputName'];
+    const itemName = xss(req.body['inputName']);
 
-    const priceStr = req.body['inputPrice'];
+    const priceStr = xss(req.body['inputPrice']);
     let priceNum = priceStr.replace(/,/g,"");
     const price = Number(priceNum);
-
-
-    // const imageFile = req.body['inputImage'];
-    // const image = req.file.path;
 
     let image = "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png";
     if (req.file) {
@@ -295,19 +276,13 @@ router.post("/item", upload.single('inputImage'), async (req, res) => {
     const inputCategories = req.body['inputCategories'];
     const categories = inputCategories.split(',').map(x => x.trim());
 
-    const description = req.body['inputDescriptions'];
+    const description = xss(req.body['inputDescriptions']);
 
-    const userId = req.session.user.username;
-    // let user = await userData.getUserbyUsername(req.session.user.username);
-    // console.log(user.username);
+    const userId = xss(req.session.user.username);
 
     const newItem = await itemData.addItem(sellType, auctionExpiration, itemName, categories, description, image, userId, price);
 
-
-    //console.log(sellType, auctionExpiration, name, price, image, categories, descriptions);
-
     res.redirect(`/items/item/${newItem._id}`);
-    //res.redirect(`pages/item`);
 
   } catch (e) {
     console.log(e);
