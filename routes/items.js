@@ -44,11 +44,12 @@ router.post("/", async (req, res) => {
   }
   try {
     await itemData.removeItem(itemId);
+    await bidderData.removeBidderByItemid(itemId);
     const result = {
       deleted: true,
       data: item
     }
-    res.redirect('/login/verifyUser');
+    res.redirect('/login');
   } catch (e) {
     console.log(e);
     res.status(500).json({ error: e });
@@ -140,6 +141,10 @@ router.get("/item/:id", async (req, res) => {
 });
 
 router.get("/modifyItem/:id", async (req, res) => {
+  if(!req.session.user){
+    res.render('pages/login', {loggedIn: false})
+    return
+  }
   try {
     const item = await itemData.getItem(req.params.id);
     if(req.session.user){
@@ -167,6 +172,10 @@ router.get("/modifyItem/:id", async (req, res) => {
 });
 
 router.get("/addItem", async (req, res) => {
+  if(!req.session.user){
+    res.render('pages/login', {loggedIn: false})
+    return
+  }
   try {
     if(req.session.user){
 			loggedIn=true;
@@ -180,6 +189,10 @@ router.get("/addItem", async (req, res) => {
 });
 
 router.get("/modifyItem/item/:id", async (req, res) => {
+  if(!req.session.user){
+    res.render('pages/login', {loggedIn: false})
+    return
+  }
   try {
     const item = await itemData.getItem(req.params.id);
     if(req.session.user){

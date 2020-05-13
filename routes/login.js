@@ -21,9 +21,15 @@ router.post('/', async (req, res) =>  {
             console.log(error)
         }
         let user = await userData.getUserbyUsername(req.session.user.username);
-        let items1 = await itemData.getItemByUser(req.session.user.username);
-        let items2 = await itemData.getItemByBidder(req.session.user.username);
-        res.render('pages/user', {user: user, items1: items1, items2: items2, loggedIn: true});
+        //console.log("user = " + user.itemsForSale);
+       let items1 = await itemData.getItemByUser(req.session.user.username);
+       //console.log(items1);
+       let items2 = await itemData.getItemByBidder(req.session.user.username);
+       let items3 = await itemData.getItemByBought(req.session.user.username);
+       let items4 = await itemData.getItemSold(req.session.user.username);
+       let items5 = await itemData.getItemByBid(req.session.user.username);
+       //console.log(items2);
+        res.render('pages/user', {user: user, items1: items1, items2: items2,  items3: items3, items4: items4, items5: items5, loggedIn: true});
     }
 });
 
@@ -36,7 +42,6 @@ router.post('/createUser', async (req, res) =>  {
         const { createUsername, createEmail, createPassword, createLN, createFN, createLocation } = req.body
 
         if(!createUsername | !createEmail | !createPassword | !createLN | !createFN | !createLocation){
-            console.log("Missing field info")
             res.render('pages/login', {loggedIn: false})
             return
         }
@@ -45,22 +50,16 @@ router.post('/createUser', async (req, res) =>  {
         let cleanPassword = createPassword;
         let cleanEmail = createEmail;
 
-        // console.log("clean username = " + cleanUsername)
-        // console.log("input username = " + createUsername)
-
         if(cleanUsername != createUsername){
-            console.log("user passed invalid charcters for the UN")
             res.render('pages/login', {loggedIn: false, error: "Error: Username can only contain the characters [^0-9a-zA-Z_]"})
             return
         }
 
         let user = await userData.getUserbyUsername(cleanUsername);
         let user2 = await userData.getUserbyEmail(cleanEmail);
-        console.log("got user and user 2 from db")
 
         //Email or username already in DB
         if(user || user2){
-            console.log("username or email already in db")
             res.render('pages/login', {error: "Error: Username or email already taken", loggedIn: false})
             return
         }
@@ -90,25 +89,24 @@ router.post('/createUser', async (req, res) =>  {
 router.post('/verifyUser', async (req, res) => {
     const { username, password } = req.body
     try {
-        let user = await userData.getUserbyUsername(username)
+        let user = await userData.getUserbyUsername(xss(username))
     } catch(e) {
         console.log(e);
         res.render('pages/login', {loggedIn:false})
     }
 
     //User is in DB
-    let user = await userData.getUserbyUsername(username)
+    let user = await userData.getUserbyUsername(xss(username))
     let match = false;
     try {
         if(user == null){
             res.render('pages/login', {loggedIn: false, error: "No account with that username"})
             return
         }
-        match = await bcrypt.compare(password, user.password);
+        match = await bcrypt.compare(xss(password), user.password);
 
         //Username and password are valid
         if(match) {
-            console.log("passwords match")
             req.session.user = {
                 firstName: user.firstName,
                 lastName: user.lastName,
@@ -116,9 +114,13 @@ router.post('/verifyUser', async (req, res) => {
                 email: user.email,
                 location: user.location
             };
-            let items1 = await itemData.getItemByUser(req.session.user.username);
-            let items2 = await itemData.getItemByBidder(req.session.user.username);
-            res.render('pages/user', {user: user, items1: items1, items2: items2, loggedIn: true});
+           let items1 = await itemData.getItemByUser(req.session.user.username);
+           let items2 = await itemData.getItemByBidder(req.session.user.username);
+           let items3 = await itemData.getItemByBought(req.session.user.username);
+           let items4 = await itemData.getItemSold(req.session.user.username);
+           let items5 = await itemData.getItemByBid(req.session.user.username);
+
+            res.render('pages/user', {user: user, items1: items1, items2: items2, items3: items3, items4: items4,items5:items5, loggedIn: true});
         } else {
             res.render('pages/login', {loggedIn: false, error: "Username and password don't match"})
         }
