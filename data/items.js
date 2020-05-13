@@ -55,8 +55,9 @@ let exportedMethods = {
     },
 
     async addCommentToItem(itemID, commentID, username, comment){
+        console.log(itemID)
         const item = await this.getItem(itemID)
-        //console.log(item);
+        console.log(item);
         (item.comments).push(commentID)
         const itemUpdateInfo = {
           comments: item.comments

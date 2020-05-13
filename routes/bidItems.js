@@ -3,6 +3,8 @@ const router = express.Router();
 const data = require("../data");
 const itemData = data.items;
 const bidderData = data.bidders;
+const xss = require('xss');
+
 
 router.get("/", async (req, res) => {
   try {
@@ -18,14 +20,13 @@ router.post("/item", async (req, res) => {
 
     const bidPriceStr = req.body['bidOnPrice'];
     let bidPriceNum = bidPriceStr.replace(/,/g,"");
-    const bidPrice = Number(bidPriceNum);
-    const itemId = req.body['itemId'];
-    //const userId = req.session.user;
-    const userId = req.session.user.username;   // test data need to add userId
+    const bidPrice = Number(xss(bidPriceNum));
+    const itemId = xss(req.body['itemId']);
+    const userId = xss(req.session.user.username);   // test data need to add userId
     const bidderList = await bidderData.getBidderByItem(itemId);
     for(i in bidderList) {
       if(userId == bidderList[i].userId) {
-        const bidder = await bidderData.updateBidder(bidderList[i]._id, bidPrice);
+        const bidder = await bidderData.updateBidder(xss(bidderList[i]._id), bidPrice);
         const item = await itemData.updateBuyer(itemId, userId);
         res.redirect(`/items/item/${itemId}`);
         return;
