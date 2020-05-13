@@ -69,11 +69,20 @@ async function removeBidder(id) {
     }
     return { deleted: true };
 }
+
+async function removeBidderByItemid(itemId) {
+    if (!itemId) throw 'you must provide a item id to search for';
+    const bidderCollection = await bidders();
+    const deletionInfo = await bidderCollection.deleteMany({itemId: itemId});
+    //await itemCollection.deleteMany({author: id});
+    return { deleted: true };
+}
 module.exports = {
     getAllBidders,
     getBidder,
     updateBidder,
     removeBidder,
     addBidder,
-    getBidderByItem
+    getBidderByItem,
+    removeBidderByItemid
 }

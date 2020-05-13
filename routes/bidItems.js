@@ -42,6 +42,10 @@ router.post("/item", async (req, res) => {
 })
 
 router.get("/item/:id", async (req, res) => {
+  if(!req.session.user){
+    res.render('pages/login', {loggedIn: false})
+    return
+  }
   try {
     const item = await itemData.getItem(req.params.id);
     const bidderList = await bidderData.getBidderByItem(req.params.id);

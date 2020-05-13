@@ -1,5 +1,6 @@
 const mongoCollections = require('../config/mongoCollections');
 const items = mongoCollections.items;
+const bidders = mongoCollections.bidders;
 const ObjectId = require('mongodb').ObjectID;
 
 let exportedMethods = {
@@ -21,7 +22,11 @@ let exportedMethods = {
     async getItemByUser(userId) {
         if (!userId) throw 'you must provide an item id to search for ';
         const itemCollection = await items();
-        const itemList = await itemCollection.find({ userId: userId,  status: 'selling' }).toArray();
+        const itemList2 = await itemCollection.find({ userId: userId, sellType: 'auction'}).toArray();
+        for(i in itemList2){
+            await this.updateStutasByItemId(itemList2[i]._id);
+        }
+        const itemList = await itemCollection.find({ userId: userId,  status: 'selling'}).toArray();
         if (itemList === null) throw 'no item with the userId ';
         return itemList;
     },
@@ -36,10 +41,30 @@ let exportedMethods = {
         return itemList;
     },
 
+    async getItemByBid(userId){
+        if (!userId) throw 'you must provide an item id to search for ';
+        const itemCollection = await items();
+        const bidderCollection = await bidders();
+        let itemList = [];
+        const list = await bidderCollection.find({userId:userId}).toArray();
+        for(i in list){
+            const item = await this.getItem(list[i].itemId);
+            itemList.push(item);
+        }
+        return itemList;
+    },
+
     async getItemByBidder(userId) {
         if (!userId) throw 'you must provide an item id to search for ';
         const itemCollection = await items();
         const itemList = await itemCollection.find({ buyer: userId, sellType: 'auction'}).toArray();
+        for(i in itemList) {
+            const today = new Date();
+            const time = today.getTime();
+            if(itemList[i].postDate.getTime() + parseInt(itemList[i].auctionExpiration)*24*60*60*1000 > time) {
+                itemList.splice(i,1);
+            }
+        }
         if (itemList === null) throw 'no item with the userId ';
         return itemList;
     },
@@ -53,6 +78,10 @@ let exportedMethods = {
     async getItemSold(userId) {
         if (!userId) throw 'you must provide an item id to search for ';
         const itemCollection = await items();
+        const itemList2 = await itemCollection.find({ userId: userId, sellType: 'auction'}).toArray();
+        for(i in itemList2){
+            await this.updateStutasByItemId(itemList2[i]._id);
+        }
         const itemList = await itemCollection.find({userId: userId, status:'soldOut'}).toArray();
         if (itemList === null) throw 'no item with the userId ';
         return itemList;
@@ -74,7 +103,7 @@ let exportedMethods = {
         item = await this.getItem(itemID)
         }catch{
             //do nothing
-            
+
         }
         //console.log(item);
         (item.comments).push(commentID)
@@ -159,7 +188,7 @@ let exportedMethods = {
         };
         const updatedInfo = await itemCollection.updateOne({ _id: new ObjectId(id) }, { $set: updatedItem });
         if (updatedInfo.modifiedCount === 0) {
-            throw 'could not update item successfully';
+            console.log('no information changed');
         }
 
         return await this.getItem(id);
@@ -182,29 +211,32 @@ let exportedMethods = {
         };
         const updatedInfo = await itemCollection.updateOne({ _id: new ObjectId(itemId) }, { $set: updateInfo });
         if (updatedInfo.modifiedCount === 0) {
-            throw 'could not buy successfully';
+            console.log('buyer no change');
         }
 
 
     },
 
-    async getAllBoughtItemsByUsername(username){
-        if(!username) throw 'you should provide a username to search for all bought items'
+    async updateStutasByItemId(itemId){
+        if(!itemId) throw 'you should provide a itemId to search for see status'
         const itemCollection = await items();
-        const itemList = await itemCollection.find({ buyer: username }).toArray();
-        for(i in itemList) {
-            if(itemList[i].sellType == 'sell'){
-                break;
-            }else{
-                const today = new Date();
-                const time = today.getTime();
-                if(itemList[i].postDate.getTime() + parseInt(item.auctionExpiration)*24*60*60*1000 > time) {
-                    itemList.splice(i,1);
-                }else {
-                    break;
-                }
-            }
+        const item = await this.getItem(itemId);
+        const today = new Date();
+        const time = today.getTime()
+        var status;
+        if(item.postDate.getTime() + parseInt(item.auctionExpiration)*24*60*60*1000 > time) {
+            status = 'selling'
+        } else{
+            status = 'soldOut';
         }
+        let updateInfo = {
+            status: status
+        };
+        const updatedInfo = await itemCollection.updateOne({ _id: new ObjectId(itemId) }, { $set: updateInfo });
+        if (updatedInfo.modifiedCount === 0) {
+            console.log('status no change');
+        }
+
     }
 };
 

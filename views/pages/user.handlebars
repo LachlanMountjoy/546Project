@@ -24,7 +24,7 @@
     <br>
     <br>
     {{#if items1}}
-  
+
     <div class="row">
       {{#each items1}}
       <div class="col-md-4">
@@ -49,13 +49,12 @@
     <br>
     <br>
   <div class="container">
-    <!-- Example row of columns -->
-    <h1>Items you've bid on</h1>
-    {{#if items2}}
+       <h1>Items you are bidding on currently</h1>
+    {{#if items5}}
     <div class="row">
-         {{#each items2}}
+         {{#each items5}}
       <div class="col-md-4">
-            <h3>{{itemName}}</h3>
+            <a href="/items/item/{{_id}}"><h3>{{itemName}}</h3></a>
             <div class="class1"><img src={{image}} alt="item" id="image1"></div>
             <div class= "class2">  <p>ID:{{_id}}</p>
             <p>SellType: {{sellType}} </p>
@@ -69,6 +68,34 @@
     </div>
     {{else}}
     <p>You are not bidding on items currently!</p>
+    {{/if}}
+        <br>
+        <br>
+        <br>
+
+    {{!-- <h1>Items you have bought</h1> --}}
+    <br>
+    <br>
+    <!-- Example row of columns -->
+    <h1>Items you've bid on</h1>
+    {{#if items2}}
+    <div class="row">
+         {{#each items2}}
+      <div class="col-md-4">
+            <a href="/items/item/{{_id}}"><h3>{{itemName}}</h3></a>
+            <div class="class1"><img src={{image}} alt="item" id="image1"></div>
+            <div class= "class2">  <p>ID:{{_id}}</p>
+            <p>SellType: {{sellType}} </p>
+            <p>Price: ${{price}} </p>
+            <p>{{description}}</p>
+            <p>Date Posted: {{postDate}}</p>
+            <p>Status: {{status}}</p>
+            </div>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <p>You have not bid on items successfully!</p>
     {{/if}}
         <br>
         <br>
@@ -128,7 +155,7 @@
      <br>
         <br>
         <br>
-        
+
 
  <hr>
   </div> <!-- /container -->
