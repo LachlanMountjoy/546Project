@@ -97,6 +97,11 @@ let exportedMethods = {
     },
 
     async addCommentToItem(itemID, commentID, username, comment){
+        if (!itemID) throw 'you must provide an itemID';
+        if (!commentID) throw 'you must provide an commentID';
+        if (!username) throw 'you must provide a username';
+        if (!comment) throw 'you must provide an comment';
+
         let item;
         try{
             item = await this.getItem(itemID)
@@ -124,7 +129,6 @@ let exportedMethods = {
         console.log("in add item")
         if (!itemName) throw 'You should provide a name of your item';
         if (!categories || !Array.isArray(categories)) throw 'you should provide an array of categories';
-        //if (categories.length <= 0) throw 'You must provide at least one category';
         if (!description) throw 'You should provide a description of your item';
         if (!image) throw 'you should update the picture of your item';   //TODO Store image in mongodb
         if (!userId) throw 'you should provide a userId';

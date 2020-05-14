@@ -13,6 +13,7 @@ let exportedMethods = {
   },
 
   async getUserById(id) {
+    if (!id) throw 'you must provide an item id to search for ';
     const userCollection = await users();
     const user = await userCollection.findOne({_id: id});
     if (!user) throw 'User not found';
@@ -20,52 +21,42 @@ let exportedMethods = {
   },
 
   async getUserbyEmail(email) {
-    // console.log("in email db")
+    if (!email) throw 'you must provide an email to search for ';
     const userCollection = await users();
     const user = await userCollection.findOne({email: email});
-    //console.log("here")
-    // if (!user) throw 'User not found';
     return user;
   },
 
 
   async getUserbyUsername(username) {
-    //console.log("in username db")
+    if (!username) throw 'you must provide an username to search for ';
     const userCollection = await users();
     const user = await userCollection.findOne({username: username});
-    //console.log("here i am");
-    //console.log(user);
-    // if (!user) throw 'User not found';
     return user;
   },
 
   async addUser(firstName, lastName, email, location, password, username) {
-    // console.log("in add user")
+    if (!firstName) throw 'you must provide a first name';
+    if (!lastName) throw  'you must provide a last name';
+    if (!email) throw     'you must provide an email';
+    if (!location) throw  'you must provide a location';
+    if (!password) throw  'you must provide a password';
+    if (!username) throw  'you must provide a username';
+
     const userCollection = await users();
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // console.log(firstName)
-    // console.log(lastName)
-    // console.log( email)
-    // console.log(username)
-    // console.log("pw in db = " + hashedPassword)
-    // console.log("here")
-
-
-    // console.log("pw in db = " + hashedPassword)
     let newUser = {
       username: username,
       firstName: firstName,
       lastName: lastName,
       email: email,
       location: location,
-      // _id: uuid(),
       password: hashedPassword,
       itemsForSale: [],
       itemsBidOn:[],
       boughtItems: [],
     };
-    //console.log(newUser);
 
     const newInsertInformation = await userCollection.insertOne(newUser);
 
@@ -75,6 +66,7 @@ let exportedMethods = {
   },
 
   async removeUser(id) {
+    if (!id) throw 'you must provide an id to remove';
     const userCollection = await users();
     const deletionInfo = await userCollection.removeOne({_id: id});
     if (deletionInfo.deletedCount === 0) {
@@ -84,8 +76,10 @@ let exportedMethods = {
   },
 
   async updateUser(id, updatedUser) {
+    if (!id) throw 'you must provide an id';
+    if (!updatedUser) throw 'you must provide an updatedUser';
+
     const user = await this.getUserById(id);
-    //console.log(user);
     const hashedPassword = bcrypt.hash(updatedUser.password, 10);
 
     let userUpdateInfo = {
