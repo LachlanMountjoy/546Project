@@ -1,6 +1,5 @@
 // sellType
-const modifySellType = document.getElementById('modifySellType');;
-
+const modifySellType = document.getElementById('modifySellType');
 modifySellType.addEventListener('change', (event) => {
   const inputAuctionExpirationDiv = document.getElementById('modifyAuctionExpirationDiv');
   if (event.target.value == 'sell') {
@@ -76,7 +75,7 @@ itemForm.addEventListener('submit', (event) => {
   const categories = inputCategories.value.split(',').map(x => x.trim());
 
   const descriptions = document.getElementById('modifyDescriptions').value;
-  
+
 
 
   console.log(sellType, auctionExpiration, name, price, image, categories, descriptions);

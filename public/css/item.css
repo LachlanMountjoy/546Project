@@ -16,7 +16,7 @@ body {
   backface-visibility: hidden;
 }
 
-img{
+.smallimg{
   width:200px;
   height:150px;
 }

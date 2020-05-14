@@ -160,6 +160,8 @@ router.get("/modifyItem/:id", async (req, res) => {
       price: priceFormat,
       userId: item.userId,
       description: item.description,
+      sellType:item.sellType,
+      auctionExpiration:item.auctionExpiration,
       image: '/' + item.image,
       categories: item.categories,
       description: item.description,
@@ -210,6 +212,8 @@ router.get("/modifyItem/item/:id", async (req, res) => {
       description: item.description,
       image: '/' + item.image,
       categories: item.categories,
+      sellType: item.sellType,
+      auctionExpiration: item.auctionExpiration,
       description: item.description,
       id: item._id,
       loggedIn:loggedIn
